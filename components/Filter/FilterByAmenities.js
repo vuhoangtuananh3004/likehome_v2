@@ -1,14 +1,21 @@
 import { Checkbox } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { filter } from "../../features/hotel/hotelSlice";
+import FilterContext from "../Context/FilterContext";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const listAmenities = [
   "Wifi",
-  "Hotub",
-  "Free Parking",
-  "Self Check in",
-  "Air Conditioning",
+  "Hot tub",
+  "Free parking",
+  "Self check-in",
+  "Air conditioning",
+  ,
+  "Kitchen",
 ];
 export default function FilterByAmenities() {
+  const dispatch = useDispatch();
+  const { filterAmenities, setFilterAmenities } = useContext(FilterContext);
   const [amenities, setAmenities] = useState([]);
   const amentitesSelection = (data) => {
     if (amenities.includes(data)) {
@@ -16,14 +23,19 @@ export default function FilterByAmenities() {
     } else {
       setAmenities([...amenities, data]);
     }
+    console.log(amenities);
   };
-  console.log("Filter By Amentities: " + amenities);
+
+  useEffect(() => {
+    setFilterAmenities({ name: "AMENITIES", value: amenities });
+  }, [dispatch, amenities, setFilterAmenities]);
   return (
     <div className="flex flex-col w-[200px] pt-4 font-bold text-black space-y-2">
       <span className="">Amenities</span>
       {listAmenities.map((data) => (
-        <span key={data} onClick={() => amentitesSelection(data)}>
+        <span key={data}>
           <Checkbox
+            onClick={() => amentitesSelection(data)}
             {...label}
             sx={{
               color: "white",

@@ -48,7 +48,7 @@ export default function SearchAutoComplete() {
         backgroundColor: "white",
         placeholderColor: "black",
         iconColor: "black",
-        // borderRadius: "24px",
+        borderRadius: "none",
         height: "44px",
         border: "none",
       }}

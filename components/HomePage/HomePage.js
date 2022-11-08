@@ -8,6 +8,7 @@ import Hamburger from "../Header/Hamburger";
 import { getStateIds, fetchDestinationId } from "../../features/hotel/hotelSlice";
 
 import { useDispatch, useSelector } from "react-redux";
+import SearchBox from "../SearchBar/SearchBox";
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const dispatch = useDispatch()

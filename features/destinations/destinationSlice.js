@@ -4,7 +4,9 @@ import db from "../../firebaseConfig";
 import { destinationIds } from "../../firebaseFunction";
 
 export const fetchDestinationId = createAsyncThunk("home/destinationIds" ,async () => {
+  
   const data = await destinationIds().then((data) => data);
+  
   return [...data];
 });
 

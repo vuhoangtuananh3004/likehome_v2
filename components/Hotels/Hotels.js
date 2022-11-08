@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchHotelsByDestinationId,
-  test,
+  fetchHotelAvailable,
+  copyListHotels,
 } from "../../features/hotel/hotelSlice";
 import Filter from "../Filter/Filter";
 import Hamburger from "../Header/Hamburger";
@@ -14,24 +15,25 @@ import PropertyCard from "./PropertyCard";
 
 export default function Hotels() {
   const router = useRouter();
-  const { hotels } = router.query;
-  const getHotelsDestId = useSelector(
+  const { hotels, locationName, checkin, checkout} = router.query;
+  const getCopyListHotel = useSelector((state) => state.hotels.filterHotels);
+  const getHotelsDestById = useSelector(
     (state) => state.hotels.getHotelByDestinationId.hotels
   );
   const loadHotels = useSelector(
     (state) => state.hotels.getHotelByDestinationId.isLoading
   );
+
   const dispatch = useDispatch();
-
   useEffect(() => {
+    let test= {id: hotels, checkIn: checkin, checkOut: checkout}
     if (loadHotels) {
-      dispatch(fetchHotelsByDestinationId("ChIJaxhMy-sIK4cRcc3Bf7EnOUI"));
+      dispatch(fetchHotelsByDestinationId(test));
     }
-  }, [loadHotels, dispatch]);
 
-  if (!loadHotels) {
-    console.log(getHotelsDestId);
-  }
+  }, [loadHotels, dispatch, hotels, checkin, checkout]);
+
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       <Image
@@ -41,35 +43,44 @@ export default function Hotels() {
         objectFit="cover"
       />
       <div className="absolute backdrop-blur-[4px] bg-white/10 h-full w-full"></div>
-
-      <div className="flex flex-col text-white absolute h-full w-full">
-        <div className="flex flex-row justify-between items-center p-5 w-full">
-          <SearchBox />
-          <Hamburger />
-        </div>
-        <div className="flex flex-row h-full w-full">
-          <div className="pl-5 w-[300px]">
-            <Filter />
+      {!loadHotels ? (
+        <div className="flex flex-col text-white absolute h-full w-full">
+          <div className="flex flex-row justify-between items-center p-5 w-full">
+            <SearchBox />
+            <div className="flex flex-col text-center font-bold tracking-widest text-xl">
+              <span>Welcome to {locationName}</span>
+              <span>
+                There is {getCopyListHotel.length} listings available
+              </span>
+            </div>
+            <Hamburger />
           </div>
-          <div className="flex flex-col h-full w-full">
-            <div className="flex h-full w-full justify-center ">
-              <div class="grid grid-flow-row-dense grid-cols-4 gap-4 h-full overflow-scroll">
-                {!loadHotels ? (
-                  <>
-                    {getHotelsDestId.map((doc) => 
-                      <div key={doc.id} className="last:mb-[8rem]">
-                        <PropertyCard  images={doc.images} value ={doc}/>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
+          <div className="flex flex-row h-full w-full">
+            <div className="pl-5 w-[300px]">
+              <Filter />
+            </div>
+            <div className="flex flex-col h-full w-full">
+              <div className="flex h-full w-full justify-center ">
+                <div className="grid grid-flow-row-dense grid-cols-5 gap-4 h-full overflow-scroll">
+                  {getCopyListHotel ? (
+                    <>
+                      {getCopyListHotel.map((doc) => (
+                        <div key={doc.id} className="last:mb-[8rem]">
+                          <PropertyCard images={doc.images} value={doc} />
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

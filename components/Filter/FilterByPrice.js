@@ -1,7 +1,19 @@
 import { Box, Slider } from "@mui/material";
-import React from "react";
+import React, { useCallback, useContext, useEffect } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { filter } from "../../features/hotel/hotelSlice";
 
+import ArrowBackSharpIcon from "@mui/icons-material/ArrowBackSharp";
+import ArrowForwardSharpIcon from "@mui/icons-material/ArrowForwardSharp";
+import ArrowDropDownSharpIcon from "@mui/icons-material/ArrowDropDownSharp";
+import FilterContext from "../Context/FilterContext";
 export default function FilterByPrice() {
+  const { setPrice, setSort } = useContext(FilterContext);
+  const [countClick, setClickCount] = useState({
+    count: 0,
+    icon: <ArrowDropDownSharpIcon />,
+  });
   const marks = [
     {
       value: 0,
@@ -21,12 +33,42 @@ export default function FilterByPrice() {
     },
   ];
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
+  const updateRange = (e, data) => {
+    setPrice({ name: "PRICE", value: data });
+    setSort({name: "PRICE", sortType: undefined})
+  };
+
+  const sort = () => {
+    setClickCount({ ...countClick, count: countClick.count++ });
+    switch (countClick.count) {
+      case 1:
+        setClickCount({ ...countClick, icon: <ArrowForwardSharpIcon /> });
+        setSort({name: "PRICE", sortType: "INCREASE"})
+        break;
+      case 0:
+        setClickCount({ ...countClick, icon: <ArrowDropDownSharpIcon /> });
+        setSort({name: "PRICE", sortType: undefined})
+        break;
+      case 2:
+        setClickCount({ ...countClick, icon: <ArrowBackSharpIcon /> });
+        setSort({name: "PRICE", sortType: "DECREASE"})
+        break;
+      case 3:
+        setClickCount({
+          ...countClick,
+          icon: <ArrowForwardSharpIcon />,
+          count: 0,
+        });
+        setSort({name: "PRICE", sortType: "INCREASE"})
+        break;
+    }
+  };
+
   return (
-    <div className="flex flex-col pt-4 font-bold text-black">
-      <span>Price per nights</span>
+    <div className="flex flex-col pt-4 font-bold text-black items-center">
+      <span onClick={sort} className="cursor-pointer">
+        Price per nights $ {countClick.icon} $$$
+      </span>
       <div className="flex justify-center">
         <Box sx={{ width: 150 }}>
           <Slider
@@ -34,7 +76,7 @@ export default function FilterByPrice() {
             color="secondary"
             aria-label="Custom marks"
             defaultValue={300}
-            getAriaValueText={valuetext}
+            onChange={updateRange}
             step={100}
             marks={marks}
             min={0}
