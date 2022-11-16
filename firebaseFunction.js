@@ -42,7 +42,7 @@ export const createUser = async (objUser) => {
 };
 export const loginUser = async (objUser) => {
   const q = query(
-    collection(db, "users"),
+    collection(db, "userss"),
     where("pwd", "==", objUser.pwd),
     where("email", "==", objUser.email)
   );
