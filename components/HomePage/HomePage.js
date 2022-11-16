@@ -5,30 +5,30 @@ import Navbar from "../NavBar/Navbar";
 import HomePageContext from "../Context/HomePageContext";
 import MiddleSection from "./MiddleSection";
 import Hamburger from "../Header/Hamburger";
-import { getStateIds, fetchDestinationId } from "../../features/hotel/hotelSlice";
-
+import {
+  getStateIds,
+  fetchDestinationId,
+} from "../../features/hotel/hotelSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SearchBox from "../SearchBar/SearchBox";
+
+import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import db from "../../firebaseConfig";
+import {
+  destinationIds,
+  getPropertiesByDestinationId,
+} from "../../firebaseFunction";
+
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState({ homePage: true });
-  const dispatch = useDispatch()
-  const destinationIds = useSelector(state => state.hotels.getDestinations)
+  const dispatch = useDispatch();
+  const destinationIds = useSelector((state) => state.hotels.getDestinations);
 
   const variants = {
     open: { opacity: 1, pointerEvents: "auto", transition: { duration: 2 } },
     close: { opacity: 0, pointerEvents: "none", transition: { duration: 2 } },
   };
 
-  //  useEffect(() => {
-  //    if (destinationIds.isLoading) {
-  //     dispatch(fetchDestinationId())
-  //    }
-   
-  //  }, [destinationIds.isLoading, dispatch])
-   
-
-  
-  
   return (
     <div className="relative overflow-hidden">
       <HomePageContext.Provider value={{ isOpen, setIsOpen }}>

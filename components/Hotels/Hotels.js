@@ -24,11 +24,11 @@ export default function Hotels() {
     (state) => state.hotels.getHotelByDestinationId.isLoading
   );
 
+  console.log(getCopyListHotel);
   const dispatch = useDispatch();
   useEffect(() => {
-    let test= {id: hotels, checkIn: checkin, checkOut: checkout}
     if (loadHotels) {
-      dispatch(fetchHotelsByDestinationId(test));
+      dispatch(fetchHotelsByDestinationId(hotels));
     }
 
   }, [loadHotels, dispatch, hotels, checkin, checkout]);

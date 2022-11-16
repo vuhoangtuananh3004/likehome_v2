@@ -8,14 +8,17 @@ import {
   doc,
   setDoc,
   getDocs,
+  limit,
+  orderBy,
 } from "firebase/firestore";
 
 import db from "./firebaseConfig";
 
-// ----------------------------- get DestinationIDs -----------------------------
+// ----------------------------- get DestinationIDs ----------------------------- xoa .id o dong cuoi sau khi lam xong
 export const destinationIds = async () => {
- 
-  const querySnapshot = await getDocs(collection(db, "destinationID"));
+  const docRef = collection(db, "destinationID")
+  const q = query(docRef)
+  const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((doc) => doc.data());
 };
 
