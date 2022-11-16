@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import SignupContext from "../Context/SignupContext";
+import AccountContext from "../Context/AccountContext";
 import Navbar from "../Header/Navbar";
 import ForgotPassword from "./ForgotPassword";
 import Login from "./Login";
@@ -23,9 +23,9 @@ function Account() {
         objectFit="cover"
       />
       <div className="flex h-full w-full justify-center items-center">
-        <SignupContext.Provider value={{ signUp, setSignup, setForgotpass }}>
+        <AccountContext.Provider value={{ signUp, setSignup, setForgotpass }}>
           {!forgotPass ? signUp ? <Signup /> : <Login /> : <ForgotPassword />}
-        </SignupContext.Provider>
+        </AccountContext.Provider>
       </div>
     </motion.div>
   );

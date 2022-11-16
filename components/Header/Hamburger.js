@@ -2,11 +2,17 @@ import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import HomePageContext from "../Context/HomePageContext";
+import useAuth from "../Account/useAuth";
+import { auth } from "../../firebaseConfig";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 function Hamburger() {
+  const user = useAuth();
+  const router = useRouter()
   const [menu, setOpenMenu] = useState(false);
+  const [accountLoginBtn, setAccountLoginBtn] = useState(true)
   const openMenu = () => {
     let closeMenu = document.getElementById("closeMenu");
-
     if (menu) {
       closeMenu.classList.remove("opacity-0");
     } else {
@@ -14,6 +20,12 @@ function Hamburger() {
     }
     setOpenMenu(!menu);
   };
+
+  const SignOut = (e) => {
+    e.preventDefault();
+    auth.signOut();
+    router.replace("/account")
+  }
   return (
     <div className="flex flex-col p-5 cursor-pointer text-white">
       <div className="absolute" id="closeMenu" onClick={openMenu}>
@@ -45,16 +57,20 @@ function Hamburger() {
               <div className="absolute top-[40px] w-full">
                 <div className="flex w-full justify-center text-center">
                   <div className="flex flex-col">
-                  <Link href={"/"}>
-                      <span className="font-bold hover:text-red-600">
-                        Home
-                      </span>
+                    <Link href={"/"}>
+                      <span className="font-bold hover:text-red-600">Home</span>
                     </Link>
-                    <Link href={"/account"}>
-                      <span className="font-bold hover:text-red-600">
-                        Account
+                    {!user.user ? (
+                      <Link href={"/account"}>
+                        <span className="font-bold hover:text-red-600">
+                          Account
+                        </span>
+                      </Link>
+                    ) : (
+                      <span className="font-bold hover:text-red-600" onClick={SignOut}>
+                        Sign Out
                       </span>
-                    </Link>
+                    )}
                   </div>
                 </div>
               </div>

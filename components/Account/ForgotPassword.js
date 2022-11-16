@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import SignupContext from '../Context/SignupContext';
+import AccountContext from '../Context/AccountContext';
 
 function ForgotPassword() {
-    const { setSignup, setForgotpass } = useContext(SignupContext)
+    const { setSignup, setForgotpass } = useContext(AccountContext)
 
     const LoginForm = () =>{
         setSignup(false)
