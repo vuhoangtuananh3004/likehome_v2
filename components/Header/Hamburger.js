@@ -27,13 +27,13 @@ function Hamburger() {
     router.replace("/account")
   }
   return (
-    <div className="flex flex-col p-5 cursor-pointer text-white">
+    <div className="flex flex-col p-5 cursor-pointer text-white z-100">
       <div className="absolute" id="closeMenu" onClick={openMenu}>
         <div className="w-[25px]  border-b-4 border-white "></div>
         <div className="w-[25px]  border-b-4 border-white mt-1"></div>
         <div className="w-[25px]  border-b-4 border-white mt-1"></div>
       </div>
-      <div className="relative w-[25px]" onClick={openMenu}>
+      <div className="relative w-[25px] z-100" onClick={openMenu} >
         {!menu ? (
           <></>
         ) : (
@@ -54,9 +54,9 @@ function Hamburger() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <div className="absolute top-[40px] w-full">
+              <div className="absolute top-[10px] w-full">
                 <div className="flex w-full justify-center text-center">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col z-100">
                     <Link href={"/"}>
                       <span className="font-bold hover:text-red-600">Home</span>
                     </Link>
