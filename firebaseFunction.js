@@ -26,7 +26,7 @@ import {
 export const createUser = async (objUser) => {
   if (!objUser.email || !objUser.pwd) return;
   try {
-    await setDoc(doc(db, "userss", objUser.email), objUser);
+    await setDoc(doc(db, "users", objUser.email), objUser);
     const user = await createUserWithEmailAndPassword(
       auth,
       objUser.email,
@@ -36,18 +36,19 @@ export const createUser = async (objUser) => {
     });
     return user;
   } catch (error) {
+    alert('Account is already in use')
     console.log("existed");
     return false;
   }
 };
 export const loginUser = async (objUser) => {
   const q = query(
-    collection(db, "userss"),
+    collection(db, "users"),
     where("pwd", "==", objUser.pwd),
     where("email", "==", objUser.email)
   );
   const querySnapshot = await getDocs(q);
-  if (querySnapshot.empty) return null;
+  if (querySnapshot.empty){alert("Invalid Email or Password"); return null;}
   signInWithEmailAndPassword(auth, objUser.email, objUser.pwd)
     .then((userCredential) => {
       console.log(userCredential.user);

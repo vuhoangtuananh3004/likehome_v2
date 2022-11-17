@@ -125,9 +125,9 @@ export const hotelSlice = createSlice({
         state.getHotelByDestinationId.isLoading = true;
       })
       .addCase(fetchHotelsByDestinationId.fulfilled, (state, action) => {
-        state.getHotelByDestinationId.isLoading = false;
         state.filterHotels = action.payload;
         state.getHotelByDestinationId.hotels = action.payload;
+        state.getHotelByDestinationId.isLoading = false;    
       });
   },
 });

@@ -1,6 +1,6 @@
 import { Rating } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import WifiIcon from "@mui/icons-material/Wifi";
 import HotTubIcon from "@mui/icons-material/HotTub";
 import LocalParkingIcon from "@mui/icons-material/LocalParking";
@@ -8,7 +8,8 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import MicrowaveSharpIcon from "@mui/icons-material/MicrowaveSharp";
 import PeopleOutlineSharpIcon from "@mui/icons-material/PeopleOutlineSharp";
-
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { motion } from "framer-motion";
 export default function PropertyCard({ value }) {
   const amenitiesIcons = [
     { name: "Wifi", icon: <WifiIcon /> },
@@ -30,6 +31,7 @@ export default function PropertyCard({ value }) {
     listingGuestLabel: value.listingGuestLabel,
     amenities: [],
   };
+  const [imgIndex, setImgIndex] = useState(0);
   const updateIconAmenities = () => {
     value.listingPreviewAmenityNames.map((key) => {
       amenitiesIcons.map((doc) => {
@@ -40,15 +42,49 @@ export default function PropertyCard({ value }) {
     });
   };
   updateIconAmenities();
+  const backBtn = (e) => {
+    e.preventDefault();
+    if (imgIndex == 0) setImgIndex(detail.images.length - 1);
+    if (imgIndex > 0) setImgIndex(imgIndex - 1);
+  };
+  const forwardBtn = (e) => {
+    e.preventDefault();
+    if (imgIndex == detail.images.length - 1) setImgIndex(0);
+    if (imgIndex < detail.images.length - 1) setImgIndex(imgIndex + 1);
+  };
+
+  const reservation = (e) => {
+    e.preventDefault()
+  }
+
   return (
-    <div className="flex flex-col h-[300px] w-[286px] rounded-[24px] border-2 border-white bg-yellow-900/50 shadow-lg shadow-blue-500/50">
-      <div className="relative h-[225px] w-full overflow-scroll">
+    <div className="flex flex-col h-[300px] w-[350px] rounded-[24px] border-2 border-white bg-yellow-900/50 shadow-lg shadow-blue-500/50">
+      <div className="relative h-[225px] w-full overflow-scroll group">
+        <div className="absolute h-full w-full t-0 l-0 text-black z-10">
+        <div className="absolute bottom-3 h-[50px] w-[200px] bg-purple-900/70 rounded-br-[50px] text-center text-white font-bold tracking-wider translate-x-[-200px] group-hover:translate-x-[0px] transition duration-700 ease-in-out" onClick={reservation} >Reservation</div>
+          <div className="flex flex-cols justify-between items-center h-full w-full">
+            <div
+              className="flex text-indigo-900 h-[30px] w-[30px] bg-white/50 rounded-full justify-center items-center cursor-pointer"
+              onClick={backBtn}
+            >
+              <ArrowBackIos color="inherit" fontSize="medium" />
+            </div>
+            <div
+              className="flex text-indigo-900 h-[30px] w-[30px] bg-white/50 rounded-full justify-center items-center cursor-pointer"
+              onClick={forwardBtn}
+            >
+              <ArrowForwardIos color="inherit" fontSize="medium" />
+            </div>
+          </div>
+        </div>
         <Image
           className="rounded-tl-[24px] rounded-tr-[24px]"
-          src={`${detail.images[0]}`}
+          src={`${detail.images[imgIndex]}`}
           alt="No image found"
           layout="fill"
           objectFit="cover"
+          quality={20}
+          priority
         />
       </div>
       <div className="flex flex-col h-[75px] w-full bg-white/50 rounded-bl-[24px] rounded-br-[24px] text-sm text-black overflow-scroll space-y-1">
@@ -65,7 +101,9 @@ export default function PropertyCard({ value }) {
           />
           ({detail.rating})
         </div>
-        <span className="text-center">{detail.accessibilityLabel}, {detail.listingGuestLabel}</span>
+        <span className="text-center">
+          {detail.accessibilityLabel}, {detail.listingGuestLabel}
+        </span>
       </div>
     </div>
   );

@@ -21,9 +21,6 @@ import {
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState({ homePage: true });
-  const dispatch = useDispatch();
-  const destinationIds = useSelector((state) => state.hotels.getDestinations);
-
   const variants = {
     open: { opacity: 1, pointerEvents: "auto", transition: { duration: 2 } },
     close: { opacity: 0, pointerEvents: "none", transition: { duration: 2 } },

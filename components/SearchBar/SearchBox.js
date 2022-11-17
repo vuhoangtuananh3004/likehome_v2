@@ -96,8 +96,6 @@ export default function SearchBox() {
     valueCheckOut.getMonth() + 1
   }-${valueCheckOut.getDate()}-${valueCheckOut.getFullYear()}`;
   // ---------------ADULTS----------------------
-
-  console.log(checkIn);
   const [adult, setAdult] = useState();
   const adultOptions = [1, 2, 3];
 
@@ -153,7 +151,10 @@ export default function SearchBox() {
             clearIcon={null}
             dayPlaceholder={`${valueCheckIn.getDate()}`}
             monthPlaceholder={`${valueCheckIn.getMonth()}`}
-            yearPlaceholder={`${valueCheckIn.getYear()}`}
+            yearPlaceholder={`${valueCheckIn.getFullYear()}`}
+            // dayPlaceholder={new Date().getDate()}
+            // monthPlaceholder={new Date().getMonth()}
+            // yearPlaceholder={new Date().getFullYear()}
             minDate={new Date()}
             maxDate={new Date("10/31/2023")}
           />

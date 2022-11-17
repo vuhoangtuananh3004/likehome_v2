@@ -95,6 +95,7 @@ function Login() {
           onClick={() => handleRequire("password")}
         >
           <input
+            type="password"
             onChange={getPwd}
             className="rounded-l-full pl-10 h-full w-full outline-none"
             placeholder="Password"

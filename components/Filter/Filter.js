@@ -30,9 +30,7 @@ export default function Filter() {
   };
  
   useEffect(()=> {
-  
-    dispatch(filter([filterPrice, filterRating, filterAmenities, sort, sortR]))
-
+      dispatch(filter([filterPrice, filterRating, filterAmenities, sort, sortR]))
   },[dispatch, filterPrice, filterRating, filterAmenities, sort, sortR])
   return (
     <FilterContext.Provider value={{setPrice, setRating, filterAmenities,  setFilterAmenities, setSort, setSortRating}}>
