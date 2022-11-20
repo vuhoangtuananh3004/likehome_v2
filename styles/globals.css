@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  background-color: rgba(201, 201, 201, 0.92)
+html {
+  overflow: hidden;
+  height: 100%;
 }
-* {
-  box-sizing: border-box;
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 
 

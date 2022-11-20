@@ -1,13 +1,22 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import HomePageContext from "../Context/HomePageContext";
-
+import Link from "next/link";
+import useAuth from "../Account/useAuth";
+import { useRouter } from "next/router";
+import { auth } from "../../firebaseConfig";
 export default function Navbar() {
+  const user = useAuth();
+  const router = useRouter()
   const { isOpen, setIsOpen } = useContext(HomePageContext);
   const navBtn = (name) => {
     setIsOpen({ [name]: true });
   };
-
+  const SignOut = (e) => {
+    e.preventDefault();
+    auth.signOut();
+    router.replace("/account")
+  }
   return (
     <div className="flex flex-col p-4 tracking-wider font-bold text-lg space-y-2">
       <motion.span
@@ -31,6 +40,17 @@ export default function Navbar() {
       >
         About Us
       </motion.span>
+      {!user.user ? (
+        <Link href={"/account"}>
+          <span className="font-bold hover:text-white/70 cursor-pointer">
+            Account
+          </span>
+        </Link>
+      ) : (
+        <span className="font-bold hover:text-red-600 cursor-pointer" onClick={SignOut}>
+          Sign Out
+        </span>
+      )}
       
     </div>
   );

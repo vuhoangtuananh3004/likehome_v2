@@ -32,9 +32,12 @@ export const hotelSlice = createSlice({
   name: "hotels",
   initialState,
   filterHotels: [],
-  removeId: [],
-
   reducers: {
+    fetchHotelByDestID: (state, action) => {
+      state.getHotelByDestinationId.hotels = action.payload;
+      state.filterHotels = action.payload
+      state.getHotelByDestinationId.isLoading = false;
+    },
     copyListHotels: (state, action) => {
       if (action.payload) {
         state.filterHotels = action.payload;
@@ -62,7 +65,7 @@ export const hotelSlice = createSlice({
     },
     filter: (state, action) => {
       const filter = state.getHotelByDestinationId.hotels;
-
+     
       action.payload.map((doc) => {
         switch (doc.name) {
           case "PRICE":
@@ -138,6 +141,7 @@ export const {
   filter,
   reloadGetHotelByDestinationId,
   searchBoxFilterValue,
+  fetchHotelByDestID
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

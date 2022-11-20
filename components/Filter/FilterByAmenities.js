@@ -23,14 +23,13 @@ export default function FilterByAmenities() {
     } else {
       setAmenities([...amenities, data]);
     }
-    console.log(amenities);
   };
 
   useEffect(() => {
     setFilterAmenities({ name: "AMENITIES", value: amenities });
   }, [dispatch, amenities, setFilterAmenities]);
   return (
-    <div className="flex flex-col w-[200px] pt-4 font-bold text-black space-y-2">
+    <div className="flex flex-col pt-4 font-bold space-y-2">
       <span className="">Amenities</span>
       {listAmenities.map((data) => (
         <span key={data}>

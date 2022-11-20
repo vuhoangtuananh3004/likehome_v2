@@ -65,7 +65,7 @@ export default function FilterByPrice() {
   };
 
   return (
-    <div className="flex flex-col pt-4 font-bold text-black items-center">
+    <div className="flex flex-col pt-4 font-bold">
       <span onClick={sort} className="cursor-pointer">
         Price per nights $ {countClick.icon} $$$
       </span>

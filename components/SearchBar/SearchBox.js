@@ -86,7 +86,9 @@ export default function SearchBox() {
   };
   // ---------------DATE----------------------
   /** CHECK-IN */
+
   const [valueCheckIn, onChangeCheckIn] = useState(new Date());
+  console.log(valueCheckIn);
   const checkIn = `${
     valueCheckIn.getMonth() + 1
   }-${valueCheckIn.getDate()}-${valueCheckIn.getFullYear()}`;
@@ -104,7 +106,7 @@ export default function SearchBox() {
   };
 
   return (
-    <div className="grid grid-flow-col auto-cols-max rounded-[24px] text-black opacity-90 drop-shadow-xl z-30">
+    <div className="grid grid-flow-col auto-cols-max rounded-[24px] text-black opacity-90 drop-shadow-xl">
       <div className="flex flex-col text-center text-white bg-black/50 rounded-bl-[24px]">
         <span className="text-white/60">
           <FmdGoodOutlinedIcon fontSize="inherit" />
@@ -126,8 +128,8 @@ export default function SearchBox() {
                       boxShadow: "white",
                       hoverBackgroundColor: "white",
                     }}
-                    items={items}
                     placeholder="Where to go?"
+                    items={items}
                     onSearch={handleOnSearch}
                     onSelect={handleOnSelect}
                     autoFocus
@@ -152,9 +154,6 @@ export default function SearchBox() {
             dayPlaceholder={`${valueCheckIn.getDate()}`}
             monthPlaceholder={`${valueCheckIn.getMonth()}`}
             yearPlaceholder={`${valueCheckIn.getFullYear()}`}
-            // dayPlaceholder={new Date().getDate()}
-            // monthPlaceholder={new Date().getMonth()}
-            // yearPlaceholder={new Date().getFullYear()}
             minDate={new Date()}
             maxDate={new Date("10/31/2023")}
           />
@@ -192,9 +191,9 @@ export default function SearchBox() {
             <FlightTakeoffSharpIcon fontSize="xl" />
           </span>
           <div>
-            {searchValue ? (
+        
               <Link
-                href={`../hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}`}
+                href={(searchValue) ? `/hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}` : '/' }
               >
                 <button
                   onClick={reloadPage}
@@ -214,9 +213,7 @@ export default function SearchBox() {
                   </motion.div>
                 </button>
               </Link>
-            ) : (
-              <></>
-            )}
+      
           </div>
         </div>
       </div>

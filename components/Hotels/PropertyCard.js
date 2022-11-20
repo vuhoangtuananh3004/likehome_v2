@@ -10,6 +10,7 @@ import MicrowaveSharpIcon from "@mui/icons-material/MicrowaveSharp";
 import PeopleOutlineSharpIcon from "@mui/icons-material/PeopleOutlineSharp";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import Link from "next/link";
 export default function PropertyCard({ value }) {
   const amenitiesIcons = [
     { name: "Wifi", icon: <WifiIcon /> },
@@ -53,15 +54,18 @@ export default function PropertyCard({ value }) {
     if (imgIndex < detail.images.length - 1) setImgIndex(imgIndex + 1);
   };
 
-  const reservation = (e) => {
-    e.preventDefault()
-  }
-
   return (
     <div className="flex flex-col h-[300px] w-[350px] rounded-[24px] border-2 border-white bg-yellow-900/50 shadow-lg shadow-blue-500/50">
-      <div className="relative h-[225px] w-full overflow-scroll group">
-        <div className="absolute h-full w-full t-0 l-0 text-black z-10">
-        <div className="absolute bottom-3 h-[50px] w-[200px] bg-purple-900/70 rounded-br-[50px] text-center text-white font-bold tracking-wider translate-x-[-200px] group-hover:translate-x-[0px] transition duration-700 ease-in-out" onClick={reservation} >Reservation</div>
+      <div className="relative h-[225px] w-full overflow-scroll group/book">
+        <div className="absolute h-full w-full t-0 l-0 text-black z-10">   
+            <div
+              className="absolute bottom-3 h-[50px] w-[200px] bg-purple-900/70 rounded-br-[50px] text-center text-white font-bold tracking-wider translate-x-[-200px] group-hover/book:translate-x-[0px] transition duration-700 ease-in-out"
+            >
+            <Link     href={{
+              pathname: `../reservation/${value.id}`,
+              query: {...detail},
+            }} passHref className="cursor-pointer"><a rel="noopener noreferrer" target="_blank">Reservation</a></Link>
+            </div>
           <div className="flex flex-cols justify-between items-center h-full w-full">
             <div
               className="flex text-indigo-900 h-[30px] w-[30px] bg-white/50 rounded-full justify-center items-center cursor-pointer"

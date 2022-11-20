@@ -41,8 +41,8 @@ export default function FilterByRating() {
     }
   };
   return (
-    <div className="flex flex-col w-[200px] pt-4 font-bold text-black space-y-2">
-      <span className="flex justify-center items-center cursor-pointer" onClick={sort}>
+    <div className="flex flex-col pt-4 font-bold space-y-2">
+      <span className="flex items-center cursor-pointer" onClick={sort}>
         Guest Rating: <StarIcon fontSize="sm"/>{countClick.icon}
         <StarIcon fontSize="sm"/><StarIcon fontSize="sm" /><StarIcon fontSize="sm"/>
       </span>
