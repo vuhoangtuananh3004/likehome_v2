@@ -14,7 +14,7 @@ function Reservation() {
   if (!imgs) return <h2>Loading</h2>
   return (
     <div className="flex flex-col h-full w-full justify-center items-center bg-sky-900/20">
-      <div className="mt-5">
+      <div className="mt-5 z-20">
         <SearchBox />
       </div>
       <div className="flex flex-row h-full w-full p-10">
