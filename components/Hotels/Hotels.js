@@ -24,21 +24,22 @@ import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
 
 export default function Hotels(props) {
-  const router = useRouter()
+  const router = useRouter();
   const { hotels, locationName, checkin, checkout } = router.query;
-
-  // const getCopyListHotel = useSelector((state) => state.hotels.filterHotels);
+  const dispatch = useDispatch();
+  const getCopyListHotel = useSelector((state) => state.hotels.filterHotels);
   // const getHotelsDestById = useSelector(
   //   (state) => state.hotels.getHotelByDestinationId.hotels
   // );
-  // const loadHotels = useSelector(
-  //   (state) => state.hotels.getHotelByDestinationId.isLoading
-  // );
-  // useEffect(() => {
-  //   if (loadHotels) {
-  //     dispatch(fetchHotelsByDestinationId(hotels));
-  //   }
-  // }, [loadHotels, dispatch, hotels]);
+  console.log(getCopyListHotel);
+  const loadHotels = useSelector(
+    (state) => state.hotels.getHotelByDestinationId.isLoading
+  );
+  useEffect(() => {
+    if (loadHotels) {
+      dispatch(fetchHotelsByDestinationId(hotels));
+    }
+  }, [loadHotels, dispatch, hotels]);
 
   // const PropertyCard = dynamic(() => import("./PropertyCard"), {
   //   suspense: true,
@@ -48,15 +49,28 @@ export default function Hotels(props) {
     loaded: { opacity: 1, transition: { duration: 2 } },
     reload: { opacity: 0, transition: { duration: 0 } },
   };
-  const isLoading = useSelector(
-    (state) => state.hotels.getHotelByDestinationId.isLoading
-  );
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (isLoading) dispatch(fetchHotelByDestID(props.hotels));
-  }, [dispatch, isLoading, props.hotels]);
 
-  if (!props) return <h2>Loading........</h2>;
+  if (loadHotels)
+    return (
+      <div class="flex h-screen w-screen justify-center items-center">
+        <div className="absolute brightness-50 h-full w-full top-0 -z-40">
+          <Image
+            src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="No image found"
+            layout="fill"
+            objectFit="cover"
+            priority
+            quality={10}
+          />
+        </div>
+        <div
+          class="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
+          role="status"
+        >
+          <span class="visually-hidden"></span>
+        </div>
+      </div>
+    );
   return (
     <div className="flex flex-col h-screen w-full">
       <div className="absolute brightness-50 h-full w-full top-0 -z-40">
@@ -71,21 +85,36 @@ export default function Hotels(props) {
       </div>
       <div className="flex flex-row w-full justify-evenly items-center text-white p-5">
         <span>Logo</span>
-        <motion.div className="z-20" initial={{y:-100}} animate={{y: 0}} transition={{duration:1}}>
-          <SearchBox/>
+        <motion.div
+          className="z-20"
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <SearchBox />
         </motion.div>
         <span>Welcome to {locationName}</span>
       </div>
       <div className="flex flex-row h-full w-full text-white overflow-hidden mt-10">
-        <motion.div initial={{x:-300}} animate={{x:0}} transition={{duration: 1}} className="w-[300px]">
+        <motion.div
+          initial={{ x: -300 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 1 }}
+          className="w-[300px]"
+        >
           <Profile />
           <Filter />
           <Promotion />
           <TravelNotice />
         </motion.div>
-        <motion.div initial={{opacity:0}} animate={{opacity:1 }} transition={{duration: 2}} className="container min-h-screen w-full overflow-auto ml-10">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+          className="container min-h-screen w-full overflow-auto ml-10"
+        >
           <div className="grid grid-cols-4 gap-5">
-            {props.hotels.map((doc) => (
+            {getCopyListHotel.map((doc) => (
               <div key={doc.id} className="last:mb-[12rem]">
                 <PropertyCard images={doc.images} value={doc} />
               </div>

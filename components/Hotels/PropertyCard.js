@@ -64,7 +64,7 @@ export default function PropertyCard({ value }) {
             <Link     href={{
               pathname: `../reservation/${value.id}`,
               query: {...detail},
-            }} passHref className="cursor-pointer"><a rel="noopener noreferrer" target="_blank">Reservation</a></Link>
+            }} passHref legacyBehavior className="cursor-pointer"><a rel="noopener noreferrer" target="_blank">Reservation</a></Link>
             </div>
           <div className="flex flex-cols justify-between items-center h-full w-full">
             <div
