@@ -10,12 +10,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import useAuth from "./useAuth";
 
 function Login() {
-  const user = useAuth()
-  const router = useRouter()
+  const user = useAuth();
+  const router = useRouter();
+  const linkParam = router.query;
   const { setSignup, setForgotpass } = useContext(AccountContext);
   const [userObj, setUserObj] = useState({ email: null, pwd: null });
-  const signUpStatus = useSelector(state => state.account.signUp.status)
-  const dispatch = useDispatch()
+  const signUpStatus = useSelector((state) => state.account.signUp.status);
+  const dispatch = useDispatch();
   const [Required, setRequired] = useState({
     emailRequired: false,
     passWordRequired: false,
@@ -50,17 +51,22 @@ function Login() {
   const signIn = (e) => {
     e.preventDefault();
     if (userObj.email && userObj.pwd) {
-      dispatch(loginUserWithEmailAndPass(userObj))
+      dispatch(loginUserWithEmailAndPass(userObj));
     }
   };
-  useEffect(()=>{
-      if (user.user){
-        const uid = user.user.uid;
-        const path = "/";
-        router.push(path)
+  useEffect(() => {
+    if (user.user) {
+      const path = "/";
+      if (linkParam.id) {
+        router.replace({
+          pathname: `../${linkParam.namePage}/${linkParam.id}`,
+          query: { ...linkParam },
+        });
+      } else {
+        router.push(path);
       }
-      
-  },[router, user.user])
+    }
+  }, [linkParam, router, user.user]);
 
   return (
     <div className="backdrop-blur-md bg-white/30 border-4 border-slate-200 rounded-[50px] w-[500px] h-[600px] text-center ml-10">

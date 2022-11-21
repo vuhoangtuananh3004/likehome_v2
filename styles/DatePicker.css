@@ -8,6 +8,10 @@
   background-color: white;
   cursor: pointer;
 }
+.design {
+  height: 40px;
+  border-radius: 12px;
+}
 .react-date-picker,
 .react-date-picker *,
 .react-date-picker *:before,

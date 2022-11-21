@@ -20,7 +20,10 @@ export default function PropertyCard({ value }) {
     { name: "Air conditioning", icon: <AcUnitIcon /> },
     { name: "Kitchen", icon: <MicrowaveSharpIcon /> },
   ];
+
   const detail = {
+    id: value.id,
+    adults: value.adults,
     images: [...value.images],
     title: value.title,
     listingName: value.listingName,
@@ -30,19 +33,20 @@ export default function PropertyCard({ value }) {
     accessibilityLabel: value.accessibilityLabel,
     price: value.price,
     listingGuestLabel: value.listingGuestLabel,
-    amenities: [],
+    amenitiesTitle: value.listingPreviewAmenityNames,
+    roomType: value.roomType
   };
   const [imgIndex, setImgIndex] = useState(0);
-  const updateIconAmenities = () => {
-    value.listingPreviewAmenityNames.map((key) => {
-      amenitiesIcons.map((doc) => {
-        if (key === doc.name) {
-          detail.amenities.push(doc.icon);
-        }
-      });
-    });
-  };
-  updateIconAmenities();
+  // const updateIconAmenities = () => {
+  //   value.listingPreviewAmenityNames.map((key) => {
+  //     amenitiesIcons.map((doc) => {
+  //       if (key === doc.name) {
+  //         detail.amenities.push(doc.icon);
+  //       }
+  //     });
+  //   });
+  // };
+  // // updateIconAmenities();
   const backBtn = (e) => {
     e.preventDefault();
     if (imgIndex == 0) setImgIndex(detail.images.length - 1);

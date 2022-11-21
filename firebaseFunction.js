@@ -19,6 +19,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  updateProfile,
 } from "firebase/auth";
 
 
@@ -30,8 +31,15 @@ export const createUser = async (objUser) => {
     const user = await createUserWithEmailAndPassword(
       auth,
       objUser.email,
-      objUser.pwd
+      objUser.pwd,
     ).then((userCredential) => {
+      updateProfile(auth.currentUser, {
+        displayName: objUser.firstname
+      }).then(() => {
+        console.log("Profile Updated");
+      }).catch((error) => {
+        console.log("Unable to update your profile");
+      });
       auth.signOut();
     });
     return user;
@@ -96,7 +104,7 @@ export const allProperties = async () => {
 };
 // ----------------------------- get All Properties------------------------------
 export const checkAvailable = async (hotelId) => {
-  const docRef = doc(db, "Check Availability", hotelId);
+  const docRef = doc(db, "checkBookings", hotelId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     return await docSnap.data().available;

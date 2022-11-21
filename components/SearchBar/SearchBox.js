@@ -193,7 +193,7 @@ export default function SearchBox() {
           <div>
         
               <Link
-                href={(searchValue) ? `/hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}` : '/' }
+                href={(searchValue) ? `/hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}&id=${searchValue.id}` : '/' }
               >
                 <button
                   onClick={reloadPage}

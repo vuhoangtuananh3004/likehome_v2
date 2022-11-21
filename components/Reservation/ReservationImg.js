@@ -5,7 +5,7 @@ function ReservationImg(props) {
   return (
     <div className="relative h-full w-full">
       <Image
-        className=""
+        className="rounded-[12px] drop-shadow-xl"
         src={props.imgUrl}
         alt="No image found"
         layout="fill"

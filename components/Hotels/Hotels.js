@@ -31,7 +31,6 @@ export default function Hotels(props) {
   // const getHotelsDestById = useSelector(
   //   (state) => state.hotels.getHotelByDestinationId.hotels
   // );
-  console.log(getCopyListHotel);
   const loadHotels = useSelector(
     (state) => state.hotels.getHotelByDestinationId.isLoading
   );
@@ -95,14 +94,14 @@ export default function Hotels(props) {
         </motion.div>
         <span>Welcome to {locationName}</span>
       </div>
-      <div className="flex flex-row h-full w-full text-white overflow-hidden mt-10">
+      <div className="flex flex-row h-full w-full text-white mt-10">
         <motion.div
           initial={{ x: -300 }}
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
-          className="w-[300px]"
+          className="min-h-full w-[300px] overflow-auto"
         >
-          <Profile />
+          <Profile namePage="hotels"/>
           <Filter />
           <Promotion />
           <TravelNotice />

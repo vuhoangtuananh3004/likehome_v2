@@ -26,7 +26,7 @@ function Signup() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [phone, setPhone] = useState("");
-  const object = { email, pwd, matchPwd, firstname, lastname,phone};
+  const object = { email, pwd, matchPwd, firstname, lastname, phone};
   const handleRequire = (e) => {
     e === "email"
       ? (copyRequire.emailRequired = true)
