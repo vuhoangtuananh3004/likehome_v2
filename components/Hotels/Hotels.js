@@ -51,7 +51,7 @@ export default function Hotels(props) {
 
   if (loadHotels)
     return (
-      <div class="flex h-screen w-screen justify-center items-center">
+      <div className="flex h-screen w-screen justify-center items-center">
         <div className="absolute brightness-50 h-full w-full top-0 -z-40">
           <Image
             src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"

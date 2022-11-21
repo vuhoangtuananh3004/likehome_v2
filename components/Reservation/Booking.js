@@ -1,15 +1,31 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDateAvailableById, reloadDateBooking } from "../../features/hotel/bookingSlice";
+import { fetchDataBooking, checkDate } from "../../features/hotel/bookingSlice";
 import DisplayResult from "./DisplayResult";
 
 function Booking() {
-  const dispatch = useDispatch()
-  const isLoading = useSelector(state => state.booking.booking.isLoading)
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const hotelId = router.query.id;
+  const dateAvailable = useSelector(state => state.booking.dateAvailable)
+  const dateBooking = useSelector((state) => state.booking.booking.dateBooking);
+  const isLoading = useSelector((state) => state.booking.booking.isLoading);
   const [valueCheckIn, onChangeCheckIn] = useState(new Date());
   const [valueCheckOut, onChangeCheckOut] = useState(new Date());
-    dispatch(fetchDateAvailableById("10269973"))
+  let checkInDate = {date: valueCheckIn.getDate().toString(), month: (valueCheckIn.getMonth() + 1).toString(), year: valueCheckIn.getFullYear().toString()};
+  let checkOutDate = {date: valueCheckOut.getDate().toString(), month: (valueCheckOut.getMonth() +1).toString(), year: valueCheckOut.getFullYear().toString()};
+  useEffect(() => {
+    if (isLoading) dispatch(fetchDataBooking(hotelId));
+  });
+  if (isLoading) return <h2>Loading......</h2>;
+  console.log(dateAvailable);
+  const submit = (e) => {
+    e.preventDefault();
+    if (!isLoading)
+    dispatch(checkDate({in: checkInDate, out: checkOutDate}))
+  };
   return (
     <div className="flex flex-col justify-center items-center h-full w-full">
       <div className="flex flex-row w-full justify-center items-center drop-shadow-xl">
@@ -41,11 +57,16 @@ function Booking() {
             maxDate={new Date("10/31/2023")}
           />
         </div>
-        <button className="h-[73px] w-[200px] bg-sky-400 border border-black">
+        <button
+          onClick={submit}
+          className="h-[73px] w-[200px] bg-sky-400 border border-black"
+        >
           Search
         </button>
       </div>
-      <div className="contain h-full w-[1200px] mx-auto"><DisplayResult/></div>
+      <div className="contain h-full w-[1200px] mx-auto">
+        <DisplayResult />
+      </div>
     </div>
   );
 }

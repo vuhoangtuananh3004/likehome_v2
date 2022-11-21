@@ -88,7 +88,6 @@ export default function SearchBox() {
   /** CHECK-IN */
 
   const [valueCheckIn, onChangeCheckIn] = useState(new Date());
-  console.log(valueCheckIn);
   const checkIn = `${
     valueCheckIn.getMonth() + 1
   }-${valueCheckIn.getDate()}-${valueCheckIn.getFullYear()}`;
@@ -220,15 +219,3 @@ export default function SearchBox() {
     </div>
   );
 }
-// <div className="flex flex-col text-center">
-// <div className="h-[44px] w-[75px] text-center divide-x bg-black/50">
-//   <span className="text-white/60 font-bold">
-//     <TagOutlinedIcon fontSize="inherit" /> Room
-//   </span>
-//   <Dropdown
-//     options={options}
-//     onChange={dropDownFunc}
-//     placeholder="#Room"
-//   />
-// </div>
-// </div>

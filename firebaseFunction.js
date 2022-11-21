@@ -107,7 +107,7 @@ export const checkAvailable = async (hotelId) => {
   const docRef = doc(db, "checkBookings", hotelId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return await docSnap.data().available;
+    return await docSnap.data().booking;
   } else {
     return null;
   }

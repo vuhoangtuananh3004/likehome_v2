@@ -65,7 +65,6 @@ export const hotelSlice = createSlice({
     },
     filter: (state, action) => {
       const filter = state.getHotelByDestinationId.hotels;
-     
       action.payload.map((doc) => {
         switch (doc.name) {
           case "PRICE":
