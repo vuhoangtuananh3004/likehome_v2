@@ -86,8 +86,8 @@ export const userExisted = async (objUser) => {
 // ----------------------------- get DestinationIDs -----------------------------
 export const destinationIds = async () => {
   const docRef = collection(db, "destinationID");
-  const q = query(docRef);
-  const querySnapshot = await getDocs(q);
+  // const q = query(docRef, limit(1));
+  const querySnapshot = await getDocs(docRef);
   return querySnapshot.docs.map((doc) => doc.data());
 };
 

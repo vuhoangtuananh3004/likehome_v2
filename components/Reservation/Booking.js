@@ -20,12 +20,13 @@ function Booking() {
     if (isLoading) dispatch(fetchDataBooking(hotelId));
   });
   if (isLoading) return <h2>Loading......</h2>;
-  console.log(dateAvailable);
   const submit = (e) => {
     e.preventDefault();
     if (!isLoading)
     dispatch(checkDate({in: checkInDate, out: checkOutDate}))
   };
+
+  console.log(dateAvailable);
   return (
     <div className="flex flex-col justify-center items-center h-full w-full">
       <div className="flex flex-row w-full justify-center items-center drop-shadow-xl">

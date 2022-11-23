@@ -41,7 +41,7 @@ function Reservation() {
   return (
     <div className="flex flex-col h-full w-full justify-center items-center ">
       <div className="flex pt-5 pb-5 h-full w-full justify-center z-20 bg-indigo-900">
-        <SearchBox />
+        searchBox
       </div>
       <div className="flex flex-row h-full w-full p-3 space-x-10">
         <div className="h-fit w-1/6 bg-slate-800/20 rounded-[24px]">
@@ -80,3 +80,4 @@ function Reservation() {
 }
 
 export default Reservation;
+// <SearchBox />
