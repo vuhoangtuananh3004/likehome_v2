@@ -9,6 +9,8 @@ import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 
 export default function HomePage() {
+     const user = useAuth();
+  
 
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {

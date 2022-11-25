@@ -1,144 +1,193 @@
 import React from "react";
 
+const getDateAvailable = (dateBooking, indexInMonth, indexOutMonth) => {
+  let dateAvailable = [];
+
+  for (let k = indexInMonth; k <= indexOutMonth; k++) {
+    let startDay = null;
+    let endDay = null;
+    let temp = dateBooking[k].days.filter((t) => t.isAvailable);
+    let currentMonth = dateBooking[k].month;
+    let currentYear = dateBooking[k].year;
+    let lengthOfIndexDaysInMonth = dateBooking[k].days.length;
+    for (let i = 0; i < temp.length; i++) {
+      if (startDay == null) startDay = temp[i].day;
+      if (startDay != null) {
+        if (i + 1 < temp.length) {
+          if (temp[i + 1].day - temp[i].day == 1) continue;
+        }
+        let tempAddDay = temp[i].day + 1 > temp[temp.length - 1].day ? 0 : 1;
+        endDay = temp[i].day + tempAddDay;
+      }
+      if (startDay != null && endDay != null) {
+        dateAvailable.push({
+          startDay: startDay,
+          endDay: endDay,
+          startMonth: currentMonth,
+          endMonth: currentMonth,
+          startYear: currentYear,
+          endYear: currentYear,
+          totalDays: lengthOfIndexDaysInMonth,
+        });
+        startDay = null;
+        endDay = null;
+      }
+    }
+  }
+
+  const countDaysBooking = [...dateAvailable];
+
+  let filter = dateAvailable.filter((t) => {
+    if (t.startDay == 1 || t.endDay == t.totalDays) return true;
+    return false;
+  });
+  let combind = [];
+  for (let i = 0; i < filter.length; i++) {
+    if (i + 1 < filter.length) {
+      let currentMonth = filter[i].endMonth;
+      let nextMonth = filter[i + 1].startMonth;
+      let isNextMonth =
+        nextMonth < currentMonth
+          ? nextMonth + 12 - currentMonth
+          : nextMonth - currentMonth;
+      if (isNextMonth == 1 && filter[i + 1].startDay == 1) {
+        filter[i].endDay = filter[i + 1].endDay;
+        filter[i].endMonth = filter[i + 1].endMonth;
+        filter[i].endYear = filter[i + 1].endYear;
+      }
+      if (filter[i].startMonth != filter[i].endMonth) combind.push(filter[i]);
+    }
+  }
+
+  let getRemoveIndex = [];
+  for (let k = 0; k < dateAvailable.length; k++) {
+    if (k + 1 < dateAvailable.length) {
+      let currentEndDay = dateAvailable[k].endDay;
+      let currentEndMonth = dateAvailable[k].endMonth;
+      let nextEndDay = dateAvailable[k + 1].endDay;
+      let nextEndMonth = dateAvailable[k + 1].endMonth;
+      if (currentEndDay == nextEndDay && currentEndMonth == nextEndMonth) {
+        getRemoveIndex.push(k + 1);
+      }
+    }
+  }
+  for (let i = getRemoveIndex.length - 1; i >= 0; i--) {
+    dateAvailable.splice(getRemoveIndex[i], 1);
+  }
+  return [dateAvailable, countDaysBooking]
+};
+
 function Test() {
   let days = [];
   for (let i = 1; i <= 29; i++) {
     let temp = { day: i, isAvailable: true };
-    if (i == 1 || i == 28 || i == 3) {
+    if (i == 1 || i == 28 || i == 15) {
       temp = { day: i, isAvailable: false };
     }
     days.push(temp);
   }
 
+  let day2 = [];
+  for (let i = 1; i <= 31; i++) {
+    let temp = { day: i, isAvailable: true };
+    day2.push(temp);
+  }
   let day1 = [];
-  for (let i = 1; i <= 29; i++) {
-    let temp = { day: i, isAvailable: true};
+  for (let i = 1; i <= 27; i++) {
+    let temp = { day: i, isAvailable: true };
+    if (i == 3 || i == 26 || i == 15) {
+      temp = { day: i, isAvailable: false };
+    }
     day1.push(temp);
   }
-
-  const checkBooking = [
+  // console.log(days);
+  const dateBooking = [
     { month: 11, year: 2022, days: days },
-    { month:12, year: 2022, days: days },
-    { month: 1, year: 2023, days: days },
-    { month: 2, year: 2023, days: day1 },
+    { month: 12, year: 2022, days: days },
+    { month: 1, year: 2023, days: day1 },
+    { month: 2, year: 2023, days: day2 },
     { month: 3, year: 2023, days: days },
   ];
-  const t = {
-    monthCheckInIndex: 1,
-    monthCheckOutIndex: 3,
-    dayIn: 29,
-    dayOut: 1,
-    monthIn: 12,
-    monthOut: 2,
-  };
-  //   console.log(checkBooking);
-  let dayReservation = [];
-  //   console.log(checkBooking[0]);
-  //   for (let i = t.monthCheckInIndex; i < t.monthCheckOutIndex; i++){
-  // let temp = checkBooking[i].days.filter(t => t.isAvailable == false)
-  //   }
 
-  let available = [];
-  for (let k = t.monthCheckInIndex; k <= t.monthCheckOutIndex; k++) {
+  let indexInMonth = 1;
+  let indexOutMonth = 3;
+  let inDay = 29;
+  let dayOut = 1;
+
+  let dateAvailable = [];
+
+  for (let k = indexInMonth; k <= indexOutMonth; k++) {
     let startDay = null;
     let endDay = null;
-    let i = 0;
-    if (k == t.monthCheckInIndex){
-        i = t.dayIn - 1
-    }
-    for (i ; i < checkBooking[k].days.length; i++) {
-      if ( k != t.monthCheckInIndex) {
-        if (available[available.length - 1].endDay == null) {
-          if (i < checkBooking[k].days.length - 1 ){
-            if (checkBooking[k].days[i].isAvailable) continue;   
-          }
-          available[available.length - 1].endDay = i + 1;
-          available[available.length - 1].endMonth = checkBooking[k].month;
-          available[available.length - 1].endYear = checkBooking[k].year;
+    let temp = dateBooking[k].days.filter((t) => t.isAvailable);
+    let currentMonth = dateBooking[k].month;
+    let currentYear = dateBooking[k].year;
+    let lengthOfIndexDaysInMonth = dateBooking[k].days.length;
+    for (let i = 0; i < temp.length; i++) {
+      if (startDay == null) startDay = temp[i].day;
+      if (startDay != null) {
+        if (i + 1 < temp.length) {
+          if (temp[i + 1].day - temp[i].day == 1) continue;
         }
+        let tempAddDay = temp[i].day + 1 > temp[temp.length - 1].day ? 0 : 1;
+        endDay = temp[i].day + tempAddDay;
       }
-      if (checkBooking[k].days[i].isAvailable && startDay == null)
-        startDay = i + 1;
-      if (!checkBooking[k].days[i].isAvailable && startDay != null)
-        endDay = i + 1;
       if (startDay != null && endDay != null) {
-        available.push({
+        dateAvailable.push({
           startDay: startDay,
           endDay: endDay,
-          startMonth: checkBooking[k].month,
-          endMonth: checkBooking[k].month,
-          startYear: checkBooking[k].year,
-          endYear: checkBooking[k].year,
+          startMonth: currentMonth,
+          endMonth: currentMonth,
+          startYear: currentYear,
+          endYear: currentYear,
+          totalDays: lengthOfIndexDaysInMonth,
         });
         startDay = null;
         endDay = null;
-      }
-      if (startDay != null && i == checkBooking[k].days.length - 1) {
-        available.push({
-          startDay: startDay,
-          endDay: endDay,
-          startMonth: checkBooking[k].month,
-          endMonth: checkBooking[k].month,
-          startYear: checkBooking[k].year,
-          endYear: checkBooking[k].year,
-        });
-        startDay = null;
-        endDay = null;
-      }
-      if (k == t.monthCheckOutIndex && i == checkBooking[k].days.length - 1) {
-        available[available.length - 1].endDay = i + 1;
-        available[available.length - 1].endMonth = checkBooking[k].month;
-        available[available.length - 1].endYear = checkBooking[k].year;
       }
     }
   }
-  let start = { startDay: null, startMonth: null, startYear: null };
-  let end = { endDay: null, endMonth: null, endYear: null };
-  for (let i = 0; i < available.length; i++) {
-    if (
-      t.dayIn >= available[i].startDay &&
-      t.dayIn <= available[i].endDay &&
-      start.day == null
-    )
-      start = {
-        startDay: t.dayIn,
-        startMonth: available[i].startMonth,
-        startYear: available[i].startYear,
-      };
-    if (t.dayOut >= available[i].startDay && t.dayOut <= available[i].endDay)
-      end = {
-        endDay: t.dayOut,
-        endMonth: available[i].endMonth,
-        endYear: available[i].endYear,
-      };
 
-    // if (end.endDay == null){
-    //     end = start
-    // }
+  const countDaysBooking = [...dateAvailable];
+
+  let filter = dateAvailable.filter((t) => {
+    if (t.startDay == 1 || t.endDay == t.totalDays) return true;
+    return false;
+  });
+  let combind = [];
+  for (let i = 0; i < filter.length; i++) {
+    if (i + 1 < filter.length) {
+      let currentMonth = filter[i].endMonth;
+      let nextMonth = filter[i + 1].startMonth;
+      let isNextMonth =
+        nextMonth < currentMonth
+          ? nextMonth + 12 - currentMonth
+          : nextMonth - currentMonth;
+      if (isNextMonth == 1 && filter[i + 1].startDay == 1) {
+        filter[i].endDay = filter[i + 1].endDay;
+        filter[i].endMonth = filter[i + 1].endMonth;
+        filter[i].endYear = filter[i + 1].endYear;
+      }
+      if (filter[i].startMonth != filter[i].endMonth) combind.push(filter[i]);
+    }
   }
-  console.log(available);
-  console.log(start);
-  console.log(end);
 
-  //   for (let i = t.monthCheckInIndex; i <= t.monthCheckOutIndex; i++) {
-  //     if (i == t.monthCheckInIndex) {
-  //       dayReservation = checkDateAvailableInMonth(
-  //         checkBooking[i],
-  //         "SAME_MONTH",
-  //         t,
-  //         dayReservation
-  //       );
-  //     }
-  //     // else {
-  //     //   dayReservation = checkDateAvailableInMonth(
-  //     //     checkBooking[i],
-  //     //     "DIFF_MONTH",
-  //     //     t,
-  //     //     dayReservation
-  //     //   );
-  //     // }
-  //   }
-  //   console.log(dayReservation);
+  let getRemoveIndex = [];
+  for (let k = 0; k < dateAvailable.length; k++) {
+    if (k + 1 < dateAvailable.length) {
+      let currentEndDay = dateAvailable[k].endDay;
+      let currentEndMonth = dateAvailable[k].endMonth;
+      let nextEndDay = dateAvailable[k + 1].endDay;
+      let nextEndMonth = dateAvailable[k + 1].endMonth;
+      if (currentEndDay == nextEndDay && currentEndMonth == nextEndMonth) {
+        getRemoveIndex.push(k + 1);
+      }
+    }
+  }
+  for (let i = getRemoveIndex.length - 1; i >= 0; i--) {
+    dateAvailable.splice(getRemoveIndex[i], 1);
+  }
+
   return <div>Test</div>;
 }
 
@@ -156,7 +205,7 @@ export default Test;
 //   let count = 0;
 //   switch (key) {
 //     case "SAME_MONTH":
-//       for (let i = t.dayIn - 1; i < data.days.length; i++) {
+//       for (let i = t.inDay - 1; i < data.days.length; i++) {
 //         if (data.days[i].isAvailable) {
 //           if (count == 0) {
 //             subtemp.startDay = i;
@@ -240,7 +289,7 @@ export default Test;
 
 // let temp1 = []
 // let subTemp = []
-// for (let i = (t.dayIn - 1); i < data.days.length; i++){
+// for (let i = (t.inDay - 1); i < data.days.length; i++){
 //     if (temp1.length == 0){
 //         if (!data.days[i].isAvailable) continue;
 //         temp1.push(i)

@@ -81,7 +81,6 @@ export const userExisted = async (objUser) => {
   }
   return false;
 };
-
 // ***************************** HOTELS FUNCTIONS   *****************************
 // ----------------------------- get DestinationIDs -----------------------------
 export const destinationIds = async () => {

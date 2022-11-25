@@ -4,6 +4,8 @@ import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataBooking, checkDate } from "../../features/hotel/bookingSlice";
 import DisplayResult from "./DisplayResult";
+import DatePicker1 from "react-datepicker";
+
 
 function Booking() {
   const dispatch = useDispatch();
@@ -26,7 +28,6 @@ function Booking() {
     dispatch(checkDate({in: checkInDate, out: checkOutDate}))
   };
 
-  console.log(dateAvailable);
   return (
     <div className="flex flex-col justify-center items-center h-full w-full">
       <div className="flex flex-row w-full justify-center items-center drop-shadow-xl">
