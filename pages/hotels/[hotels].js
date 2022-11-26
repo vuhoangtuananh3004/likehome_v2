@@ -19,7 +19,7 @@ import { getPropertiesByDestinationId } from '../../firebaseFunction'
 
 function Home() {
   return (
-    <Hotels/>
+    <Hotels />
   )
 }
 

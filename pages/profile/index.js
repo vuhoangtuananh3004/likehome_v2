@@ -1,9 +1,9 @@
 import React from 'react'
-
-function Home() {
+import Profile from '../../components/Profile/Profile'
+function index() {
   return (
-    <div>profile</div>
+    <Profile />
   )
 }
 
-export default Home
+export default index

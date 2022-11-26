@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, loginUser, userExisted } from "../../firebaseFunction";
+import { createUser, loginUser, userExisted , updateUser} from "../../firebaseFunction";
 
 export const createUserWithEmailAndPass = createAsyncThunk(
   "/user",
@@ -17,6 +17,14 @@ export const loginUserWithEmailAndPass = createAsyncThunk(
   "user/loging",
   async (userObj) => {
     let data = await loginUser(userObj);
+    return data;
+  }
+);
+
+export const UpdateProfile = createAsyncThunk(
+  "user/profile",
+  async (objUser) => {
+    let data = await updateUser(objUser);
     return data;
   }
 );
@@ -45,11 +53,15 @@ export const accountSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createUserWithEmailAndPass.fulfilled, (state, action) => {
       if (action.payload) state.signUp.status = action.payload;
-    }),
-      builder.addCase(loginUserWithEmailAndPass.fulfilled, (state, action) => {
-        if (action.payload) state.login.status = true;
-        state.user = action.payload;
-      });
+    });
+    builder.addCase(loginUserWithEmailAndPass.fulfilled, (state, action) => {
+      if (action.payload) state.login.status = true;
+      state.user = action.payload;
+    });
+    builder.addCase(UpdateProfile.fulfilled, (state, action) => {
+      if (action.payload) state.login.status = true;
+      state.user = action.payload;
+    });
   },
 });
 

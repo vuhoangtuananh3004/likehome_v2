@@ -13,6 +13,10 @@ function Profile(props) {
     auth.signOut();
     router.replace("/account");
   };
+  const Profile = (e) => {
+    e.preventDefault();
+    router.replace("/profile");
+  };
   const SignIn = (e) => {
     e.preventDefault();
     if (linkParam.id) {
@@ -40,7 +44,12 @@ function Profile(props) {
         ) : (
           <div className="flex flex-col text-center">
             <span className=" ">Hi, {user.user.displayName}</span>
-            <span className="cursor-pointer">Profile</span>
+            <span
+              className="cursor-pointer hover:text-slate-900 underline underline-offset-2 cursor-pointer"
+              onClick={Profile}
+            >
+              Profile
+            </span>
             <span
               className="cursor-pointer hover:text-slate-900 underline underline-offset-2 cursor-pointer"
               onClick={SignOut}

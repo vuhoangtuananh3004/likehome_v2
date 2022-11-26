@@ -10,9 +10,10 @@ import {
   getDocs,
   limit,
   orderBy,
+  updateDoc
 } from "firebase/firestore";
 
-import db from './firebaseConfig'
+import db from "./firebaseConfig";
 import { auth } from "./firebaseConfig";
 import {
   createUserWithEmailAndPassword,
@@ -22,6 +23,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+export const Billing = async (email,objUser) => {
+  try {
+    await setDoc(doc(db, "userbilling", email),{
+      objUser
+    });
+  } catch (error) {
+    console.log("error creating the user", error.message);
+  }
+}
 
 // ***************************** AUTHENTICATIONS   ******************************
 export const createUser = async (objUser) => {
@@ -31,20 +41,22 @@ export const createUser = async (objUser) => {
     const user = await createUserWithEmailAndPassword(
       auth,
       objUser.email,
-      objUser.pwd,
+      objUser.pwd
     ).then((userCredential) => {
       updateProfile(auth.currentUser, {
-        displayName: objUser.firstname
-      }).then(() => {
-        console.log("Profile Updated");
-      }).catch((error) => {
-        console.log("Unable to update your profile");
-      });
+        displayName: objUser.firstname,
+      })
+        .then(() => {
+          console.log("Profile Updated");
+        })
+        .catch((error) => {
+          console.log("Unable to update your profile");
+        });
       auth.signOut();
     });
     return user;
   } catch (error) {
-    alert('Account is already in use')
+    alert("Account is already in use");
     console.log("existed");
     return false;
   }
@@ -56,7 +68,10 @@ export const loginUser = async (objUser) => {
     where("email", "==", objUser.email)
   );
   const querySnapshot = await getDocs(q);
-  if (querySnapshot.empty){alert("Invalid Email or Password"); return null;}
+  if (querySnapshot.empty) {
+    alert("Invalid Email or Password");
+    return null;
+  }
   signInWithEmailAndPassword(auth, objUser.email, objUser.pwd)
     .then((userCredential) => {
       console.log(userCredential.user);
@@ -111,3 +126,19 @@ export const checkAvailable = async (hotelId) => {
     return null;
   }
 };
+
+export const updateUser = async (objUser) => {
+  try {
+    const userDocRef = doc(db, "users", objUser.email);
+    await updateDoc(userDocRef, {
+      firstname: objUser.firstname,
+      lastname: objUser.lastname,
+      phone: objUser.phone
+    });
+    const docSnap = await getDoc(userDocRef);
+    return docSnap.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
+

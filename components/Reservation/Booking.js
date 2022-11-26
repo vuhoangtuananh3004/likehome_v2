@@ -28,7 +28,7 @@ function Booking() {
   useEffect(() => {
     if (isLoading) dispatch(fetchDataBooking(hotelId));
   });
-  if (isLoading) return <h2></h2>;
+  if (isLoading) return <h2>Loading......</h2>;
   const submit = (e) => {
     e.preventDefault();
     if (!isLoading) dispatch(checkDate({ in: checkInDate, out: checkOutDate }));

@@ -1,28 +1,23 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext } from "react";
 import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import { useSelector } from "react-redux";
+import { HotelContext } from "../Context/hotelContext";
+import getStripe from "../../getStripe";
 
 function DisplayResult() {
   const router = useRouter();
+  const { currentHotel, setCurrentHotel } = useContext(HotelContext);
   const property = router.query;
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
+
   const priceConvert = (priceTemp) => {
     let temp = priceTemp.split("$");
     return parseFloat(temp[1]);
   };
   const price = priceConvert(property.price);
-  if (!property.id) return (
-    <div className="flex h-screen w-screen justify-center items-center">
-      <div
-        classNamw="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
-        role="status"
-      >
-        <span className="visually-hidden"></span>
-      </div>
-    </div>
-  );
+  if (!property.id) return <h2>Loading......</h2>;
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -105,7 +100,7 @@ function DisplayResult() {
                               {property.listingGuestLabel}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {`${dateBookingObj.inMonth}/${dateBookingObj.inDay}/${dateBookingObj.inYear} - ${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`}
+                              {`${dateBookingObj.inMonth}/${dateBookingObj.inDay}/${dateBookingObj.inYear} - ${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                               {`${price}$`}
@@ -114,7 +109,7 @@ function DisplayResult() {
                               {`${price * countDayStay}$`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              <button className="bg-green-900/20 p-2 rounded-[12px] text-md font-bold tracking-wider text-green-600 border border-rose-900">
+                              <button className="bg-green-900/20 p-2 rounded-[12px] text-md font-bold tracking-wider text-green-600 border border-rose-900" onClick={handleCheckout}>
                                 Reserve
                               </button>
                             </td>
