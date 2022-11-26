@@ -3,6 +3,7 @@ import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import { auth } from "../../firebaseConfig";
 import { useRouter } from "next/router";
 import useAuth from "../Account/useAuth";
+import Link from "next/link";
 function Profile(props) {
   const router = useRouter();
   const linkParam = router.query;

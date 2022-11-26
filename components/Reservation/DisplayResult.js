@@ -13,7 +13,16 @@ function DisplayResult() {
     return parseFloat(temp[1]);
   };
   const price = priceConvert(property.price);
-  if (!property.id) return <h2>Loading......</h2>;
+  if (!property.id) return (
+    <div className="flex h-screen w-screen justify-center items-center">
+      <div
+        classNamw="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
+        role="status"
+      >
+        <span className="visually-hidden"></span>
+      </div>
+    </div>
+  );
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -30,13 +39,13 @@ function DisplayResult() {
                   </th>
                   <th
                     scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Property Name
                   </th>
                   <th
                     scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Property Type
                   </th>
@@ -74,9 +83,9 @@ function DisplayResult() {
               </thead>
               <tbody>
                 {!displayAvailableDays ? (
-                  <div className="w-full text-center">
-                    Please select day range
-                  </div>
+                  <tr className="w-full text-center">
+                    <td>Please select day range</td>
+                  </tr>
                 ) : (
                   <>
                     <>
@@ -116,9 +125,8 @@ function DisplayResult() {
                       )}
                     </>
 
-                    {displayAvailableDays.map((e, index) => (
-                      <>
-                        <tr className="border-b">
+                    {displayAvailableDays.map((e, index) => (  
+                        <tr className="border-b last:mb-20" key={index}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             {index + 1}
                           </td>
@@ -137,9 +145,7 @@ function DisplayResult() {
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                             {`${price}$`}
                           </td>
-                         
-                        </tr>
-                      </>
+                        </tr>                    
                     ))}
                   </>
                 )}
