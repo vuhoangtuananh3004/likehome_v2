@@ -23,6 +23,16 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+export const Billing = async (email,objUser) => {
+  try {
+    await setDoc(doc(db, "userbilling", email),{
+      objUser
+    });
+  } catch (error) {
+    console.log("error creating the user", error.message);
+  }
+}
+
 // ***************************** AUTHENTICATIONS   ******************************
 export const createUser = async (objUser) => {
   if (!objUser.email || !objUser.pwd) return;
@@ -118,7 +128,6 @@ export const checkAvailable = async (hotelId) => {
 };
 
 export const updateUser = async (objUser) => {
-  console.log(objUser)
   try {
     const userDocRef = doc(db, "users", objUser.email);
     await updateDoc(userDocRef, {
@@ -127,7 +136,6 @@ export const updateUser = async (objUser) => {
       phone: objUser.phone
     });
     const docSnap = await getDoc(userDocRef);
-    console.log(docSnap.data());
     return docSnap.data();
   } catch (error) {
     console.log(error);

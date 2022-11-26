@@ -3,7 +3,7 @@ import HomePage from "../components/HomePage/HomePage";
 import Test from "../components/Test";
 export default function Home() {
 
-  return <div><HomePage/></div>;
+  return <div><HomePage /></div>;
 }
 
 
