@@ -78,7 +78,7 @@ function DisplayResult() {
                     Date
                   </td>
                   <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    Price
+                  {property.price}
                   </td>
                   <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <button className="bg-green-900/50 p-2 rounded-[12px] text-md font-bold tracking-wider text-red-600 border border-black">Reserve</button>

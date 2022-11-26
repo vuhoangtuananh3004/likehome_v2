@@ -22,12 +22,14 @@ import Promotion from "./Promotion";
 import { auth } from "../../firebaseConfig";
 import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
+import { CompareSharp } from "@mui/icons-material";
 
 export default function Hotels(props) {
   const router = useRouter();
   const { hotels, locationName, checkin, checkout } = router.query;
   const dispatch = useDispatch();
   const getCopyListHotel = useSelector((state) => state.hotels.filterHotels);
+  const data = useSelector((state) => state.account);
   // const getHotelsDestById = useSelector(
   //   (state) => state.hotels.getHotelByDestinationId.hotels
   // );

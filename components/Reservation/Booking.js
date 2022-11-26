@@ -18,7 +18,7 @@ function Booking() {
   let checkOutDate = {date: valueCheckOut.getDate().toString(), month: (valueCheckOut.getMonth() +1).toString(), year: valueCheckOut.getFullYear().toString()};
   useEffect(() => {
     if (isLoading) dispatch(fetchDataBooking(hotelId));
-  });
+  },);
   if (isLoading) return <h2>Loading......</h2>;
   console.log(dateAvailable);
   const submit = (e) => {

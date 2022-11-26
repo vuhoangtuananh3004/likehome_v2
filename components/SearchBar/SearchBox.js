@@ -38,10 +38,8 @@ export default function SearchBox() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (loadDestinations) {
-    
       dispatch(fetchDestinationId());
     }
-
   }, [loadDestinations, dispatch]);
 
   const items = [];
@@ -190,29 +188,28 @@ export default function SearchBox() {
             <FlightTakeoffSharpIcon fontSize="xl" />
           </span>
           <div>
-        
-              <Link
-                href={(searchValue) ? `/hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}&id=${searchValue.id}` : '/' }
-              >
-                <button
-                  onClick={reloadPage}
-                  className={`h-[44px] w-full bg-white rounded-r-[24px]
+            <Link
+              href={
+                searchValue
+                  ? `/hotels/${searchValue.id}?locationName=${searchValue.name}&checkin=${checkIn}&checkout=${checkOut}&id=${searchValue.id}`
+                  : "/"
+              }
+            >
+              <button
+                onClick={reloadPage}
+                className={`h-[44px] w-full bg-white rounded-r-[24px]
                     }`}
+              >
+                <motion.div
+                  className="flex justify-center items-center text-[24px]"
+                  initial={{ x: "-20%" }}
+                  animate={{ opacity: 0, x: "40%" }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <motion.div
-                    className="flex justify-center items-center text-[24px]"
-                    initial={{ x: "-20%" }}
-                    animate={{ opacity: 0, x: "40%" }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <ArrowForwardRoundedIcon
-                      fontSize="inherit"
-                      color="inherit"
-                    />
-                  </motion.div>
-                </button>
-              </Link>
-      
+                  <ArrowForwardRoundedIcon fontSize="inherit" color="inherit" />
+                </motion.div>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
