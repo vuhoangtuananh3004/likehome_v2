@@ -10,7 +10,9 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HomePage() {
-  const data = useSelector((state) => state.account);
+     const user = useAuth();
+  
+
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {
     open: { opacity: 1, pointerEvents: "auto", transition: { duration: 2 } },
