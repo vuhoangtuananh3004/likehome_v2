@@ -13,7 +13,6 @@ function DisplayResult() {
     return parseFloat(temp[1]);
   };
   const price = priceConvert(property.price);
-  console.log(dateBookingObj);
   if (!property.id) return <h2>Loading......</h2>;
   return (
     <div className="flex flex-col">
@@ -106,7 +105,7 @@ function DisplayResult() {
                               {`${price * countDayStay}$`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              <button className="bg-green-900/50 p-2 rounded-[12px] text-md font-bold tracking-wider text-red-600 border border-black">
+                              <button className="bg-green-900/20 p-2 rounded-[12px] text-md font-bold tracking-wider text-green-600 border border-rose-900">
                                 Reserve
                               </button>
                             </td>
@@ -138,14 +137,7 @@ function DisplayResult() {
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                             {`${price}$`}
                           </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                            {`${price * countDayStay}$`}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            <button className="bg-green-900/50 p-2 rounded-[12px] text-md font-bold tracking-wider text-red-600 border border-black">
-                              Reserve
-                            </button>
-                          </td>
+                         
                         </tr>
                       </>
                     ))}

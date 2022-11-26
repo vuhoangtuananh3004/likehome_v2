@@ -34,7 +34,7 @@ export const bookingSlice = createSlice({
       const inMonth = parseInt(dateIn.month);
       const outMonth = parseInt(dateOut.month);
       const inYear = parseInt(dateIn.year);
-      const outYear = parseInt(dateOut.year)
+      const outYear = parseInt(dateOut.year);
       let indexInMonth = dateBooking
         .map((obj) => obj.month)
         .indexOf(parseInt(dateIn.month));
@@ -42,18 +42,22 @@ export const bookingSlice = createSlice({
         .map((obj) => obj.month)
         .indexOf(parseInt(dateOut.month));
 
-      const [dateAvailable, displayAvailableDays, dateBookingObj, countDayStay] =
-        getDateAvailable(
-          dateBooking,
-          indexInMonth,
-          indexOutMonth,
-          inDay,
-          inMonth,
-          outDay,
-          outMonth,
-          inYear,
-          outYear,
-        );
+      const [
+        dateAvailable,
+        displayAvailableDays,
+        dateBookingObj,
+        countDayStay,
+      ] = getDateAvailable(
+        dateBooking,
+        indexInMonth,
+        indexOutMonth,
+        inDay,
+        inMonth,
+        outDay,
+        outMonth,
+        inYear,
+        outYear
+      );
 
       return {
         ...state,
@@ -165,7 +169,6 @@ const getDateAvailable = (
 
   let filterInMonth = combind.filter((t) => t.startMonth == inMonth);
   let filterOutMonth = combind.filter((t) => t.endMonth == outMonth);
-  let countDayStay = 0;
   let dateBookingObj = {
     inDay: null,
     outDay: null,
@@ -203,6 +206,7 @@ const getDateAvailable = (
     }
   }
 
+  let countDayStay = 0;
   let monthRange = [];
   let tempMonthStart = parseInt(new Date().getMonth());
   for (let i = 0; i < 12; i++) {
@@ -213,20 +217,21 @@ const getDateAvailable = (
   }
   monthRange = monthRange.splice(
     monthRange.indexOf(inMonth),
-    monthRange.indexOf(outMonth) - 1
+    monthRange.indexOf(outMonth)
   );
-
+  console.log(monthRange);
+  let countYear = 0;
   for (let i = 0; i < monthRange.length; i++) {
-    let tempDay = 0;
-
-    if (i == 0) {tempDay += ( daysInMonth(monthRange[i], inYear) - inDay);countDayStay += tempDay; continue}
-    if (i == monthRange.length - 1) {tempDay += ( daysInMonth(monthRange[i], outYear)-outDay), countDayStay += tempDay;}
-    if (monthRange[i] >= monthRange[i-1]) tempDay += daysInMonth(monthRange[i], inYear)
-    else tempDay += daysInMonth(monthRange[i], outYear);
-    countDayStay += tempDay
+    if (monthRange[i] == 12) countYear += 1;
+    let tempYear = countYear == 1 ? outYear : inYear;
+    countDayStay += daysInMonth(monthRange[i], tempYear);
+    if (i == 0) countDayStay -= inDay;
+    if (i == monthRange.length - 1)
+      countDayStay -= daysInMonth(monthRange[i], tempYear) - outDay;
   }
+  if (inDay == outDay && inMonth == outMonth && inYear == outYear)
+    countDayStay = 1;
 
-  console.log(countDayStay);
   return [dateAvailable, combind, dateBookingObj, countDayStay];
 };
 
