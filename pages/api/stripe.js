@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { Billing } from "../../firebaseFunction";
+import { Billing, rewardUpdate } from "../../firebaseFunction";
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
@@ -30,7 +30,9 @@ export default async function handler(req, res) {
         cancel_url: `${req.headers.origin}/`,
       });
       let data = {...session, ...booking}
+      const reward = req.body.user.reward + (req.body.total * 0.5)
       await Billing(email, data)
+      await rewardUpdate(email, reward)
       console.log(data)
       res.status(200).json(session);
       

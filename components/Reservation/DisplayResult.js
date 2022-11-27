@@ -27,10 +27,9 @@ function DisplayResult() {
       `${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`,
     ];
     let res = { ...user, ...property, total, date };
-    console.log(res);
 
     const stripe = await getStripe();
-    if (!res.user) return alert(" need to sign in");
+    if (!res.login.status) return alert("Need to sign in");
     const response = await fetch("/api/stripe", {
       method: "POST",
       headers: {
@@ -149,27 +148,27 @@ function DisplayResult() {
                       )}
                     </>
 
-                    {displayAvailableDays.map((e, index) => (  
-                        <tr className="border-b last:mb-20" key={index}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {index + 1}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {property.listingName}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {property.roomType}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {property.listingGuestLabel}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            {`${e.startMonth}/${e.startDay}/${e.startYear} - ${e.endMonth}/${e.endDay}/${e.endYear}`}
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                            {`${price}$`}
-                          </td>
-                        </tr>
+                    {displayAvailableDays.map((e, index) => (
+                      <tr className="border-b last:mb-20" key={index}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {index + 1}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {property.listingName}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {property.roomType}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {property.listingGuestLabel}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                          {`${e.startMonth}/${e.startDay}/${e.startYear} - ${e.endMonth}/${e.endDay}/${e.endYear}`}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
+                          ${`${price}`}
+                        </td>
+                      </tr>
                     ))}
                   </>
                 )}
