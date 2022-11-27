@@ -10,7 +10,9 @@ import {
   getDocs,
   limit,
   orderBy,
-  updateDoc
+  updateDoc,
+  FieldValue,
+  arrayUnion
 } from "firebase/firestore";
 
 import db from "./firebaseConfig";
@@ -21,17 +23,31 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 
-export const Billing = async (email,objUser) => {
-  try {
-    await setDoc(doc(db, "userbilling", email),{
-      objUser
-    });
-  } catch (error) {
-    console.log("error creating the user", error.message);
+export const Billing = async (email, objUser) => {
+  const userDocRef = doc(db, "userbilling", email);
+  const userSnapshot = await getDoc(doc(db, "userbilling", email));
+  if (!userSnapshot.exists()) {
+    try {
+      await setDoc(userDocRef, {
+        array: [objUser],
+      });
+    } catch (error) {
+      console.log("error creating the billing", error.message);
+    }
+  } else {
+    try {
+      await updateDoc(userDocRef, {
+        array: arrayUnion(objUser),
+      });
+      console.log(array);
+    } catch (error) {
+      console.log("error creating the billing", error.message);
+    }
   }
-}
+};
 
 // ***************************** AUTHENTICATIONS   ******************************
 export const createUser = async (objUser) => {
@@ -133,7 +149,7 @@ export const updateUser = async (objUser) => {
     await updateDoc(userDocRef, {
       firstname: objUser.firstname,
       lastname: objUser.lastname,
-      phone: objUser.phone
+      phone: objUser.phone,
     });
     const docSnap = await getDoc(userDocRef);
     return docSnap.data();
@@ -142,3 +158,30 @@ export const updateUser = async (objUser) => {
   }
 };
 
+export const getData = async (objUser) => {
+  try {
+    const userDocRef = doc(db, "users", objUser.email);
+    const docSnap = await getDoc(userDocRef);
+    return docSnap.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => {
+  onAuthStateChanged(auth, callback);
+};
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};

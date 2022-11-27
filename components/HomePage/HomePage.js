@@ -8,9 +8,7 @@ import Hamburger from "../Header/Hamburger";
 import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-
 export default function HomePage() {
-     const user = useAuth();
   
 
   const [isOpen, setIsOpen] = useState({ homePage: true });

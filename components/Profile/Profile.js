@@ -16,8 +16,6 @@ function Profile() {
   const data = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
-  console.log(data);
-
   const [firstname, setFirstname] = useState(data.user.firstname);
   const [lastname, setLastname] = useState(data.user.lastname);
   const [phone, setPhone] = useState(data.user.phone);
@@ -26,11 +24,10 @@ function Profile() {
   const [editPhone, setEditPhone] = useState(false);
   const [email] = useState(data.user.email);
 
-
   var pwdLen = data.user.pwd.length;
   var pwdHidden = data.user.pwd.charAt(0);
   for (var i = 1; i < pwdLen; i++) {
-      pwdHidden += '*';
+    pwdHidden += "*";
   }
 
   var welcome = "Welcome back, " + data.user.firstname + "!";
@@ -67,7 +64,7 @@ function Profile() {
       setEditPhone(false);
     }
   };
-  
+
   const onSave = () => {
     dispatch(UpdateProfile({ email, firstname, lastname, phone }));
     setEditPhone(false);
@@ -133,7 +130,9 @@ function Profile() {
           <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
             Password
           </span>
-          <button className="bg-white p-4 text-black rounded" onClick={onSave}>Save</button>
+          <button className="bg-white p-4 text-black rounded" onClick={onSave}>
+            Save
+          </button>
         </div>
         <div className="flex flex-col justify-left align-center p-7">
           <div className="flex flex-row">
@@ -212,14 +211,11 @@ function Profile() {
           </div>
           <div className="flex flex-row">
             <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-            {pwdHidden}
+              {pwdHidden}
             </span>
           </div>
-          
         </div>
-        
       </div>
-     
     </>
   );
 }
