@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, loginUser, userExisted , updateUser} from "../../firebaseFunction";
+import { createUser, loginUser, userExisted , updateUser, historyReservation} from "../../firebaseFunction";
 
 export const createUserWithEmailAndPass = createAsyncThunk(
   "/user",
@@ -28,6 +28,16 @@ export const UpdateProfile = createAsyncThunk(
     return data;
   }
 );
+
+export const reservationHist = createAsyncThunk(
+  "user/profile/reservation",
+  async (objUser) => {
+    let data = await historyReservation(objUser);
+    return data;
+  }
+);
+
+
 const initialState = {
   user: {},
   signUp: {
@@ -36,6 +46,10 @@ const initialState = {
   login: {
     status: false,
   },
+  reservationHist: {
+    reservations: {},
+    isLoading: true
+  }
 };
 
 export const accountSlice = createSlice({
@@ -61,6 +75,10 @@ export const accountSlice = createSlice({
     builder.addCase(UpdateProfile.fulfilled, (state, action) => {
       if (action.payload) state.login.status = true;
       state.user = action.payload;
+    });
+    builder.addCase(reservationHist.fulfilled, (state, action) => {
+      if (action.payload) state.reservationHist.isLoading = false;
+      state.reservationHist.reservations = action.payload;
     });
   },
 });
