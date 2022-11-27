@@ -16,10 +16,6 @@ function Profile() {
   const data = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bf253b7f97ecab04cb7db8b8bf974fd3da1676bf
   const [firstname, setFirstname] = useState(data.user.firstname);
   const [lastname, setLastname] = useState(data.user.lastname);
   const [phone, setPhone] = useState(data.user.phone);
@@ -83,7 +79,6 @@ function Profile() {
         </span>
       </div>
 
-<<<<<<< HEAD
       <table className="border-separate border-spacing-5 mt-10 text-xl font-bold tracking-wider">
         <tbody>
           <tr>
@@ -111,40 +106,6 @@ function Profile() {
                 >
                   <EditOutlinedIcon />
                 </button>
-=======
-      <div className="flex flex-row justify-left align-center">
-        <div className="flex flex-col justify-left align-center p-7">
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            First name
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Last name
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Phone number
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Email
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Password
-          </span>
-          <button className="bg-white p-4 text-black rounded" onClick={onSave}>
-            Save
-          </button>
-        </div>
-        <div className="flex flex-col justify-left align-center p-7">
-          <div className="flex flex-row">
-            {editFirstname ? (
-              <div className="flex w-[300px] h-[50px] rounded-full ml-20 border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
-                <input
-                  className="rounded-l-full pl-10 h-full w-full outline-none"
-                  type="text"
-                  placeholder="Enter new firstname"
-                  onChange={(e) => setFirstname(e.target.value)}
-                />
-                <BadgeOutlinedIcon className="mr-5" />
->>>>>>> bf253b7f97ecab04cb7db8b8bf974fd3da1676bf
               </div>
             </td>
           </tr>
@@ -202,7 +163,6 @@ function Profile() {
                   <EditOutlinedIcon />
                 </button>
               </div>
-<<<<<<< HEAD
             </td>
           </tr>
           <tr>
@@ -223,33 +183,6 @@ function Profile() {
         Save
       </button>
     </div>
-=======
-            ) : (
-              <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-                {data.user.phone ? phone : "phone number not found"}
-              </span>
-            )}
-            <button
-              className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
-              onClick={EditPhone}
-            >
-              <EditOutlinedIcon />
-            </button>
-          </div>
-          <div className="flex flex-row">
-            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-              {email}
-            </span>
-          </div>
-          <div className="flex flex-row">
-            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-              {pwdHidden}
-            </span>
-          </div>
-        </div>
-      </div>
-    </>
->>>>>>> bf253b7f97ecab04cb7db8b8bf974fd3da1676bf
   );
 }
 
