@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { auth } from "../../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import useAuth from "./useAuth";
+import { loginUser } from "../../firebaseFunction";
 
 function Login() {
   const user = useAuth();
@@ -48,25 +49,14 @@ function Login() {
   const getPwd = (e) => {
     setUserObj({ ...userObj, pwd: e.target.value });
   };
-  const signIn = (e) => {
+  const signIn = async(e) => {
     e.preventDefault();
     if (userObj.email && userObj.pwd) {
-      dispatch(loginUserWithEmailAndPass(userObj));
+      await loginUser(userObj);
     }
+    router.replace("/");
   };
-  useEffect(() => {
-    if (user.user) {
-      const path = "/";
-      if (linkParam.id) {
-        router.replace({
-          pathname: `../${linkParam.namePage}/${linkParam.id}`,
-          query: { ...linkParam },
-        });
-      } else {
-        router.push(path);
-      }
-    }
-  }, [linkParam, router, user.user]);
+
 
   return (
     <div className="backdrop-blur-md bg-white/30 border-4 border-slate-200 rounded-[50px] w-[500px] h-[600px] text-center ml-10">

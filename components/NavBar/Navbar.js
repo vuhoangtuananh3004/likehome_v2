@@ -5,21 +5,32 @@ import Link from "next/link";
 import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { auth } from "../../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignOut } from "../../features/account/accountSlice";
+import { signOutUser } from "../../firebaseFunction";
+
 export default function Navbar() {
-  const user = useAuth();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.account);
+  console.log(user);
   const router = useRouter();
   const { isOpen, setIsOpen } = useContext(HomePageContext);
   const navBtn = (name) => {
     setIsOpen({ [name]: true });
   };
-  const SignOut = (e) => {
-    e.preventDefault();
-    auth.signOut();
-    router.replace("/account");
+  const SignOut = async () => {
+    dispatch(userSignOut());
+    await signOutUser();
   };
   const Profile = (e) => {
     e.preventDefault();
     router.replace("/profile");
+  };
+
+  const Login = (e) => {
+    e.preventDefault();
+    router.replace("/account");
   };
   return (
     <div className="flex flex-col p-4 tracking-wider font-bold text-lg space-y-2">
@@ -50,9 +61,9 @@ export default function Navbar() {
       >
         About Us
       </motion.span>
-      {!user.user ? (
+      {(user.login.status == false) ? (
         <Link href={"/account"}>
-          <span className="font-bold hover:text-white/70 cursor-pointer">
+          <span className="font-bold hover:text-white/70 cursor-pointer" onClick={Login}>
             Account
           </span>
         </Link>

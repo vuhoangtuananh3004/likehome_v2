@@ -16,6 +16,7 @@ function Profile() {
   const data = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
+  console.log(data);
 
   const [firstname, setFirstname] = useState(data.user.firstname);
   const [lastname, setLastname] = useState(data.user.lastname);
@@ -25,10 +26,11 @@ function Profile() {
   const [editPhone, setEditPhone] = useState(false);
   const [email] = useState(data.user.email);
 
+
   var pwdLen = data.user.pwd.length;
   var pwdHidden = data.user.pwd.charAt(0);
   for (var i = 1; i < pwdLen; i++) {
-    pwdHidden += "*";
+      pwdHidden += '*';
   }
 
   var welcome = "Welcome back, " + data.user.firstname + "!";

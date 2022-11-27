@@ -6,8 +6,12 @@ import useAuth from "../Account/useAuth";
 import { auth } from "../../firebaseConfig";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+
 function Hamburger() {
   const user = useAuth();
+  const data = useSelector((state) => state.account);
+
   const router = useRouter()
   const [menu, setOpenMenu] = useState(false);
   const [accountLoginBtn, setAccountLoginBtn] = useState(true)
@@ -60,7 +64,7 @@ function Hamburger() {
                     <Link href={"/"}>
                       <span className="font-bold hover:text-red-600">Home</span>
                     </Link>
-                    {!user.user ? (
+                    {!data.user ? (
                       <Link href={"/account"}>
                         <span className="font-bold hover:text-red-600">
                           Account
