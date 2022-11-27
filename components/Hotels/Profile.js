@@ -2,16 +2,26 @@ import React, { useState } from "react";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import { auth } from "../../firebaseConfig";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignOut } from "../../features/account/accountSlice";
 import useAuth from "../Account/useAuth";
+<<<<<<< HEAD
+import {signOutUser}from "../../firebaseFunction";
+
+=======
 import Link from "next/link";
+>>>>>>> badc3f942dbae977362dbb5727cb5bcde6f9b8eb
 function Profile(props) {
+  const dispatch = useDispatch();
+  const auth = useAuth();
   const router = useRouter();
   const linkParam = router.query;
-  const user = useAuth();
-  const SignOut = (e) => {
+  const user = useSelector((state) => state.account);
+  const SignOut = async (e) => {
     e.preventDefault();
-    auth.signOut();
-    router.replace("/account");
+    dispatch(userSignOut());
+    await signOutUser();
+
   };
   const Profile = (e) => {
     e.preventDefault();
@@ -19,7 +29,7 @@ function Profile(props) {
   };
   const SignIn = (e) => {
     e.preventDefault();
-    if (linkParam.id) {
+    if (!linkParam.id) {
       router.replace({
         pathname: `../account/${linkParam.id}`,
         query: { ...linkParam, namePage: props.namePage },
@@ -34,7 +44,7 @@ function Profile(props) {
         <div className="flex justify-center items-center h-[50px] w-[50px] rounded-full text-[48px]">
           <PersonOutlineRoundedIcon fontSize="inherit" />
         </div>
-        {!user.user ? (
+        {!user.login.status ? (
           <span
             className="cursor-pointer text-rose-900 italic underline tracking-wider"
             onClick={SignIn}
@@ -43,7 +53,7 @@ function Profile(props) {
           </span>
         ) : (
           <div className="flex flex-col text-center">
-            <span className=" ">Hi, {user.user.displayName}</span>
+            <span className=" ">Hi, {user.user.firstname}</span>
             <span
               className="cursor-pointer hover:text-slate-900 underline underline-offset-2 cursor-pointer"
               onClick={Profile}

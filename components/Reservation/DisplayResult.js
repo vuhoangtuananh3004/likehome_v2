@@ -18,6 +18,32 @@ function DisplayResult() {
   };
   const price = priceConvert(property.price);
   if (!property.id) return <h2>Loading......</h2>;
+  let total = price * countDayStay;
+  const user = useSelector((state) => state.account);
+
+  const handleCheckout = async () => {
+    const date = [
+      `${dateBookingObj.inMonth}/${dateBookingObj.inDay}/${dateBookingObj.inYear}`,
+      `${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`,
+    ];
+    let res = { ...user, ...property, total, date };
+    console.log(res);
+
+    const stripe = await getStripe();
+    if (!res.user) return alert(" need to sign in");
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(res),
+    });
+
+    if (response.statusCode === 500) return;
+    const data = await response.json();
+    console.log(data);
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -103,13 +129,16 @@ function DisplayResult() {
                               {`${dateBookingObj.inMonth}/${dateBookingObj.inDay}/${dateBookingObj.inYear} - ${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                              {`${price}$`}
+                              ${`${price}`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                              {`${price * countDayStay}$`}
+                              ${`${total}`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                              <button className="bg-green-900/20 p-2 rounded-[12px] text-md font-bold tracking-wider text-green-600 border border-rose-900" onClick={handleCheckout}>
+                              <button
+                                className="bg-green-900/20 p-2 rounded-[12px] text-md font-bold tracking-wider text-green-600 border border-rose-900"
+                                onClick={handleCheckout}
+                              >
                                 Reserve
                               </button>
                             </td>
@@ -140,7 +169,7 @@ function DisplayResult() {
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                             {`${price}$`}
                           </td>
-                        </tr>                    
+                        </tr>
                     ))}
                   </>
                 )}
