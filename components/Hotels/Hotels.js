@@ -22,7 +22,6 @@ import Promotion from "./Promotion";
 import { auth } from "../../firebaseConfig";
 import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
-import { CompareSharp } from "@mui/icons-material";
 
 export default function Hotels(props) {
   const router = useRouter();
@@ -65,15 +64,15 @@ export default function Hotels(props) {
           />
         </div>
         <div
-          class="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
+          classNamw="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
           role="status"
         >
-          <span class="visually-hidden"></span>
+          <span className="visually-hidden"></span>
         </div>
       </div>
     );
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-screen w-full items-center">
       <div className="absolute brightness-50 h-full w-full top-0 -z-40">
         <Image
           src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -84,8 +83,14 @@ export default function Hotels(props) {
           quality={10}
         />
       </div>
-      <div className="flex flex-row w-full justify-evenly items-center text-white p-5">
-        <span>Logo</span>
+      <div className="flex flex-row w-full justify-between items-center text-white p-5">
+        <div className="flex w-[300px]">
+          <Link href="/">
+            <span className="font-bold text-[24px] font-mono tracking-widest cursor-pointer">
+              LikeHome.com
+            </span>
+          </Link>
+        </div>
         <motion.div
           className="z-20"
           initial={{ y: -100 }}
@@ -94,16 +99,16 @@ export default function Hotels(props) {
         >
           <SearchBox />
         </motion.div>
-        <span>Welcome to {locationName}</span>
+        <span className="mr-5">Welcome to {locationName}</span>
       </div>
-      <div className="flex flex-row h-full w-full text-white mt-10">
+      <div className="flex flex-row h-full w-full text-white ml-5 mt-10">
         <motion.div
           initial={{ x: -300 }}
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
           className="min-h-full w-[300px] overflow-auto"
         >
-          <Profile namePage="hotels"/>
+          <Profile namePage="hotels" />
           <Filter />
           <Promotion />
           <TravelNotice />

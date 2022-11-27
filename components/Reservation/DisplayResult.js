@@ -60,13 +60,13 @@ function DisplayResult() {
                   </th>
                   <th
                     scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Property Name
                   </th>
                   <th
                     scope="col"
-                    class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
                     Property Type
                   </th>
@@ -104,9 +104,9 @@ function DisplayResult() {
               </thead>
               <tbody>
                 {!displayAvailableDays ? (
-                  <div className="w-full text-center">
-                    Please select day range
-                  </div>
+                  <tr className="w-full text-center">
+                    <td>Please select day range</td>
+                  </tr>
                 ) : (
                   <>
                     <>
@@ -149,9 +149,8 @@ function DisplayResult() {
                       )}
                     </>
 
-                    {displayAvailableDays.map((e, index) => (
-                      <>
-                        <tr className="border-b">
+                    {displayAvailableDays.map((e, index) => (  
+                        <tr className="border-b last:mb-20" key={index}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             {index + 1}
                           </td>
@@ -171,7 +170,6 @@ function DisplayResult() {
                             {`${price}$`}
                           </td>
                         </tr>
-                      </>
                     ))}
                   </>
                 )}
