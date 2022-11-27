@@ -12,7 +12,7 @@ import {
   orderBy,
   updateDoc,
   FieldValue,
-  arrayUnion
+  arrayUnion,
 } from "firebase/firestore";
 
 import db from "./firebaseConfig";
@@ -153,6 +153,17 @@ export const updateUser = async (objUser) => {
     });
     const docSnap = await getDoc(userDocRef);
     return docSnap.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const rewardUpdate = async (email, newReward) => {
+  try {
+    const userDocRef = doc(db, "users", email);
+    await updateDoc(userDocRef, {
+      reward: newReward,
+    });
   } catch (error) {
     console.log(error);
   }
