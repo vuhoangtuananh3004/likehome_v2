@@ -16,6 +16,7 @@ function Profile() {
   const data = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
+
   const [firstname, setFirstname] = useState(data.user.firstname);
   const [lastname, setLastname] = useState(data.user.lastname);
   const [phone, setPhone] = useState(data.user.phone);

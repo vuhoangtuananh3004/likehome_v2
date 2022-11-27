@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, loginUser, userExisted , updateUser} from "../../firebaseFunction";
+import {
+  createUser,
+  getData,
+  userExisted,
+  updateUser, historyReservation,
+} from "../../firebaseFunction";
 
 export const createUserWithEmailAndPass = createAsyncThunk(
   "/user",

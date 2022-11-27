@@ -22,6 +22,7 @@ import Promotion from "./Promotion";
 import { auth } from "../../firebaseConfig";
 import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
+import Link from "next/link";
 
 export default function Hotels(props) {
   const router = useRouter();
@@ -64,7 +65,7 @@ export default function Hotels(props) {
           />
         </div>
         <div
-          className="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
+          classNamw="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
           role="status"
         >
           <span className="visually-hidden"></span>

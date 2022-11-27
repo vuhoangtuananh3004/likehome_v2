@@ -142,6 +142,17 @@ export const checkAvailable = async (hotelId) => {
     return null;
   }
 };
+// ----------------------------- DISPLAY RESERVATION HISTORY ------------------------------
+export const historyReservation = async (userEmail) => {
+  const docRef = doc(db, "userbilling", userEmail);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return  docSnap.data().array;
+  } else {
+    return null;
+  }
+}
+
 // ----------------------------- UPDATE USER ------------------------------
 export const updateUser = async (objUser) => {
   try {
@@ -196,14 +207,3 @@ export const getCurrentUser = () => {
     );
   });
 };
-
-// ----------------------------- DISPLAY RESERVATION HISTORY ------------------------------
-export const historyReservation = async (userEmail) => {
-  const docRef = doc(db, "userbilling", userEmail);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return  docSnap.data().objUser;
-  } else {
-    return null;
-  }
-}

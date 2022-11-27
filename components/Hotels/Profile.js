@@ -5,12 +5,11 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../../features/account/accountSlice";
 import useAuth from "../Account/useAuth";
-<<<<<<< HEAD
 import {signOutUser}from "../../firebaseFunction";
 
-=======
+
 import Link from "next/link";
->>>>>>> badc3f942dbae977362dbb5727cb5bcde6f9b8eb
+
 function Profile(props) {
   const dispatch = useDispatch();
   const auth = useAuth();

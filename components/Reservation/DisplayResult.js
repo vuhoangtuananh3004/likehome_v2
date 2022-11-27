@@ -12,6 +12,7 @@ function DisplayResult() {
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
   const user = useSelector((state) => state.account);
+  
   const priceConvert = (priceTemp) => {
     let temp = priceTemp.split("$");
     return parseFloat(temp[1]);
