@@ -2,12 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useContext } from "react";
+import { UserContext } from "../Context/userContext";
+import { redeem, returnPoint } from "../../features/account/accountSlice";
 function Promotion() {
   const dispatch = useDispatch();
+  const { point, setPoint } = useContext(UserContext);
 
   const user = useSelector((state) => state.account);
-
+  console.log(point);
+  const Redeem = () => {
+    if (!point) { 
+    if (user.user.reward >= 100) {
+      dispatch(redeem());
+      setPoint(true);
+    } else {
+      return alert("not enough points");
+    }} else {
+      setPoint(false);
+      dispatch(returnPoint());
+    }
+  };
   return (
     <>
       {!user.login.status ? (
@@ -23,8 +38,13 @@ function Promotion() {
         </div>
       ) : (
         <div className="flex flex-col w-full text-[16px]">
+          <span className="text-center">
+            100 points you can redeem to get 5% discount for booking
+          </span>
           <span className="text-center">{user.user.reward}</span>
-          <span className="text-center" >Redeem</span>
+          <button className="text-center" onClick={Redeem}>
+            Redeem
+          </button>
         </div>
       )}
     </>

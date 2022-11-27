@@ -26,7 +26,8 @@ function Signup() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [phone, setPhone] = useState("");
-  const object = { email, pwd, matchPwd, firstname, lastname, phone};
+  let reward = 0;
+  const object = { email, pwd, firstname, lastname, phone, reward};
   const handleRequire = (e) => {
     e === "email"
       ? (copyRequire.emailRequired = true)
@@ -47,14 +48,11 @@ function Signup() {
       alert("passwords do not match");
       return;
     }
+    alert("succeed");
     dispatch(createUserWithEmailAndPass(object));
+    setSignup(false);
   };
-  useEffect(()=>{
-    if (signUpStatus){
-        dispatch(reload())
-        setSignup(false);
-    }
-  },[dispatch, setSignup, signUpStatus])
+  
 
 
   return (
@@ -63,7 +61,7 @@ function Signup() {
         Sign up
       </div>
       <div className="text-black font-bold text-[20px] pt-5 tracking-wider"></div>
-      <div className="flex flex-col h-full w-full p-4 mt-5">
+      <div className="flex flex-col h-full w-full p-10">
         <div
           className="flex w-[400px] h-[50px] rounded-full border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c"
           onClick={() => handleRequire("email")}

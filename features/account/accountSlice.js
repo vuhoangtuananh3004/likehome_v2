@@ -4,6 +4,7 @@ import {
   getData,
   userExisted,
   updateUser,
+  loginUser
 } from "../../firebaseFunction";
 
 export const createUserWithEmailAndPass = createAsyncThunk(
@@ -20,6 +21,14 @@ export const createUserWithEmailAndPass = createAsyncThunk(
 );
 export const loginUserWithEmailAndPass = createAsyncThunk(
   "user/loging",
+  async (userObj) => {
+    let data = await loginUser(userObj);
+    return data;
+  }
+);
+
+export const callback = createAsyncThunk(
+  "user/callback",
   async (userObj) => {
     let data = await getData(userObj);
     return data;
@@ -55,6 +64,12 @@ export const accountSlice = createSlice({
       state.signUp.status = true;
       state.user = {};
     },
+    redeem: (state, action) => {
+      state.user.reward -= 100;
+    },
+    returnPoint: (state, action) => {
+      state.user.reward += 100;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(createUserWithEmailAndPass.fulfilled, (state, action) => {
@@ -69,9 +84,14 @@ export const accountSlice = createSlice({
       if (action.payload) state.login.status = true;
       state.user = action.payload;
     });
+    builder.addCase(callback.fulfilled, (state, action) => {
+      if (action.payload) state.login.status = true;
+      state.signUp.status = false;
+      state.user = action.payload;
+    });
   },
 });
 
-export const { reload, userSignOut } = accountSlice.actions;
+export const { reload, userSignOut, redeem,returnPoint } = accountSlice.actions;
 
 export default accountSlice.reducer;

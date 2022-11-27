@@ -4,10 +4,11 @@ import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import { useSelector } from "react-redux";
 import { HotelContext } from "../Context/hotelContext";
 import getStripe from "../../getStripe";
-
+import { UserContext } from "../Context/userContext";
 function DisplayResult() {
+  const { point, setPoint } = useContext(UserContext);
+
   const router = useRouter();
-  const { currentHotel, setCurrentHotel } = useContext(HotelContext);
   const property = router.query;
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
@@ -18,7 +19,12 @@ function DisplayResult() {
   };
   const price = priceConvert(property.price);
   if (!property.id) return <h2>Loading......</h2>;
-  let total = price * countDayStay;
+  let total = 0
+  if (!point) {
+    total = (price * countDayStay);
+  } else {
+    total = (price * countDayStay) * 0.95;
+  }
   const user = useSelector((state) => state.account);
 
   const handleCheckout = async () => {
