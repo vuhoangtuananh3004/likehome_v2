@@ -3,7 +3,8 @@ import {
   createUser,
   getData,
   userExisted,
-  updateUser, historyReservation,
+  updateUser,
+  historyReservation,
 } from "../../firebaseFunction";
 
 export const createUserWithEmailAndPass = createAsyncThunk(
@@ -42,7 +43,6 @@ export const reservationHist = createAsyncThunk(
   }
 );
 
-
 const initialState = {
   user: {},
   signUp: {
@@ -52,9 +52,10 @@ const initialState = {
     status: false,
   },
   reservationHist: {
-    reservations: {},
-    isLoading: true
-  }
+    reservations: [],
+    isLoading: true,
+  },
+  sameDayBooking: false,
 };
 
 export const accountSlice = createSlice({
@@ -68,6 +69,36 @@ export const accountSlice = createSlice({
       state.login.status = false;
       state.signUp.status = true;
       state.user = {};
+    },
+    isBookingSameDay: (state, action) => {
+      state.sameDayBooking = false;
+      let temp = state.reservationHist.reservations;
+      let dateObj = action.payload;
+
+      if (dateObj) {
+        let dateIn = `${dateObj.inMonth}/${dateObj.inDay}/${dateObj.inYear}`;
+        let dateOut = `${dateObj.outMonth}/${dateObj.outDay}/${dateObj.outYear}`;
+        let getTimeDateIn = new Date(dateIn).getTime();
+        let getTimeDateOut = new Date(dateOut).getTime();
+        temp.map((data) => {
+          let getTimeHisIn = new Date(data.date[0]).getTime();
+          let getTimeHisOut = new Date(data.date[1]).getTime();
+          if (getTimeDateIn > getTimeHisIn && getTimeDateIn < getTimeHisOut) {
+            state.sameDayBooking = true;
+            return
+          }
+          if (
+            getTimeDateOut > getTimeHisIn &&
+            getTimeDateOut < getTimeHisOut
+          ) {
+            state.sameDayBooking = true;
+            return
+          }
+        });
+      }
+    },
+    reloadBookingSameDay: (state, action) => {
+      state.reservationHist.isLoading = true;
     },
   },
   extraReducers: (builder) => {
@@ -90,6 +121,7 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { reload, userSignOut } = accountSlice.actions;
+export const { reload, userSignOut, isBookingSameDay, reloadBookingSameDay } =
+  accountSlice.actions;
 
 export default accountSlice.reducer;

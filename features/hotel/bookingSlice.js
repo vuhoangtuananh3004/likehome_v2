@@ -79,7 +79,7 @@ export const bookingSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { loading, checkDate } = bookingSlice.actions;
+export const { loading, checkDate} = bookingSlice.actions;
 
 export default bookingSlice.reducer;
 
@@ -206,33 +206,14 @@ const getDateAvailable = (
     }
   }
 
-  let countDayStay = 0;
-  let monthRange = [];
-  let tempMonthStart = parseInt(new Date().getMonth());
-  for (let i = 0; i < 12; i++) {
-    let temp = tempMonthStart + i;
-
-    if (temp <= 12) monthRange.push(temp);
-    if (temp > 12) monthRange.push(temp - 12);
-  }
-  monthRange = monthRange.splice(
-    monthRange.indexOf(inMonth),
-    monthRange.indexOf(outMonth)
-  );
-  console.log(monthRange);
-  let countYear = 0;
-  for (let i = 0; i < monthRange.length; i++) {
-    if (monthRange[i] == 12) countYear += 1;
-    let tempYear = countYear == 1 ? outYear : inYear;
-    countDayStay += daysInMonth(monthRange[i], tempYear);
-    if (i == 0) countDayStay -= inDay;
-    if (i == monthRange.length - 1)
-      countDayStay -= daysInMonth(monthRange[i], tempYear) - outDay;
-  }
-  if (inDay == outDay && inMonth == outMonth && inYear == outYear)
-    countDayStay = 1;
-
-  return [dateAvailable, combind, dateBookingObj, countDayStay];
+    let dateIn = `${inMonth}/${inDay}/${inYear}`
+    let dateOut = `${outMonth}/${outDay}/${outYear}`
+   
+    let getTimeDateIn = new Date(dateIn).getTime();
+    let getTimeDateOut = new Date(dateOut).getTime();
+    let different_In_Days = Math.ceil((getTimeDateOut - getTimeDateIn)/(1000 * 3600 * 24))
+    if (different_In_Days == 0) different_In_Days = 1
+  return [dateAvailable, combind, dateBookingObj, different_In_Days];
 };
 
 function daysInMonth(month, year) {

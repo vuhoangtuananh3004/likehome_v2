@@ -5,14 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDataBooking, checkDate } from "../../features/hotel/bookingSlice";
 import DisplayResult from "./DisplayResult";
 import useAuth from "../Account/useAuth";
-
-
 import { motion } from "framer-motion";
-
+import { reservationHist } from "../../features/account/accountSlice";
 
 function Booking() {
   const auth = useAuth();
-  console.log(auth);
   const dispatch = useDispatch();
   const router = useRouter();
   const hotelId = router.query.id;
@@ -21,6 +18,9 @@ function Booking() {
   const isLoading = useSelector((state) => state.booking.booking.isLoading);
   const [valueCheckIn, onChangeCheckIn] = useState(new Date());
   const [valueCheckOut, onChangeCheckOut] = useState(new Date());
+  const reservations = useSelector((state) => state.account.reservationHist);
+  const user = useSelector((state) => state.account);
+  
   let checkInDate = {
     date: valueCheckIn.getDate().toString(),
     month: (valueCheckIn.getMonth() + 1).toString(),
@@ -31,15 +31,25 @@ function Booking() {
     month: (valueCheckOut.getMonth() + 1).toString(),
     year: valueCheckOut.getFullYear().toString(),
   };
+
+  useEffect(() => {
+    if (reservations.isLoading) {
+      if (user.user.email)
+      dispatch(reservationHist(user.user.email));
+    }
+  }, [dispatch, reservations.isLoading, user.user.email]);
+
   useEffect(() => {
     if (isLoading) dispatch(fetchDataBooking(hotelId));
   });
-  if (isLoading) return <h2>Loading......</h2>;
+  if (isLoading && reservations.isLoading) return <h2>Loading......</h2>;
+
   const submit = (e) => {
-    e.preventDefault();
     if (!isLoading) dispatch(checkDate({ in: checkInDate, out: checkOutDate }));
+    if (user.user.email) dispatch(reservationHist(user.user.email));
   };
 
+ 
   return (
     <motion.div
       initial={{ y: 200 }}
