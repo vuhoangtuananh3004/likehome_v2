@@ -24,6 +24,8 @@ import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
 
+=========
+>>>>>>>>> Temporary merge branch 2
 export default function Hotels(props) {
   const router = useRouter();
   const { hotels, locationName, checkin, checkout } = router.query;
@@ -65,7 +67,7 @@ export default function Hotels(props) {
           />
         </div>
         <div
-          classNamw="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
+          className="spinner-border animate-spin inline-block w-10 h-8 border-4 rounded-full"
           role="status"
         >
           <span className="visually-hidden"></span>

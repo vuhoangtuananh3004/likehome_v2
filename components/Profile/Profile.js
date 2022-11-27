@@ -82,6 +82,7 @@ function Profile() {
         </span>
       </div>
 
+<<<<<<<<< Temporary merge branch 1
       <table className="border-separate border-spacing-5 mt-10 text-xl font-bold tracking-wider">
         <tbody>
           <tr>
@@ -109,6 +110,40 @@ function Profile() {
                 >
                   <EditOutlinedIcon />
                 </button>
+=========
+      <div className="flex flex-row justify-left align-center">
+        <div className="flex flex-col justify-left align-center p-7">
+          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
+            First name
+          </span>
+          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
+            Last name
+          </span>
+          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
+            Phone number
+          </span>
+          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
+            Email
+          </span>
+          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
+            Password
+          </span>
+          <button className="bg-white p-4 text-black rounded" onClick={onSave}>
+            Save
+          </button>
+        </div>
+        <div className="flex flex-col justify-left align-center p-7">
+          <div className="flex flex-row">
+            {editFirstname ? (
+              <div className="flex w-[300px] h-[50px] rounded-full ml-20 border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
+                <input
+                  className="rounded-l-full pl-10 h-full w-full outline-none"
+                  type="text"
+                  placeholder="Enter new firstname"
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+                <BadgeOutlinedIcon className="mr-5" />
+>>>>>>>>> Temporary merge branch 2
               </div>
             </td>
           </tr>
@@ -166,6 +201,7 @@ function Profile() {
                   <EditOutlinedIcon />
                 </button>
               </div>
+<<<<<<<<< Temporary merge branch 1
             </td>
           </tr>
           <tr>
@@ -186,6 +222,33 @@ function Profile() {
         Save
       </button>
     </div>
+=========
+            ) : (
+              <span className="text-white pl-20 tracking-widest text-[16px] p-4">
+                {data.user.phone ? phone : "phone number not found"}
+              </span>
+            )}
+            <button
+              className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
+              onClick={EditPhone}
+            >
+              <EditOutlinedIcon />
+            </button>
+          </div>
+          <div className="flex flex-row">
+            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
+              {email}
+            </span>
+          </div>
+          <div className="flex flex-row">
+            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
+              {pwdHidden}
+            </span>
+          </div>
+        </div>
+      </div>
+    </>
+>>>>>>>>> Temporary merge branch 2
   );
 }
 

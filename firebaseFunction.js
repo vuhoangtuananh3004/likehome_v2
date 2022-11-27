@@ -196,25 +196,4 @@ export const getCurrentUser = () => {
     );
   });
 };
-
-// ----------------------------- DISPLAY RESERVATION HISTORY ------------------------------
-export const historyReservation = async (userEmail) => {
-  const docRef = doc(db, "userbilling", userEmail);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return  docSnap.data().objUser;
-  } else {
-    return null;
-  }
-}
-
-// ----------------------------- DISPLAY RESERVATION HISTORY ------------------------------
-export const historyReservation = async (userEmail) => {
-  const docRef = doc(db, "userbilling", userEmail);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return  docSnap.data().objUser;
-  } else {
-    return null;
-  }
-}
+>>>>>>>>> Temporary merge branch 2

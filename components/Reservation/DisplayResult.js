@@ -11,7 +11,7 @@ function DisplayResult() {
   const property = router.query;
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
-
+  const user = useSelector((state) => state.account);
   const priceConvert = (priceTemp) => {
     let temp = priceTemp.split("$");
     return parseFloat(temp[1]);
@@ -19,7 +19,6 @@ function DisplayResult() {
   const price = priceConvert(property.price);
   if (!property.id) return <h2>Loading......</h2>;
   let total = price * countDayStay;
-  const user = useSelector((state) => state.account);
 
   const handleCheckout = async () => {
     const date = [
@@ -148,27 +147,27 @@ function DisplayResult() {
                       )}
                     </>
 
-                    {displayAvailableDays.map((e, index) => (
-                      <tr className="border-b last:mb-20" key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {index + 1}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {property.listingName}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {property.roomType}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {property.listingGuestLabel}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {`${e.startMonth}/${e.startDay}/${e.startYear} - ${e.endMonth}/${e.endDay}/${e.endYear}`}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                          ${`${price}`}
-                        </td>
-                      </tr>
+                    {displayAvailableDays.map((e, index) => (  
+                        <tr className="border-b last:mb-20" key={index}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {index + 1}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {property.listingName}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {property.roomType}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {property.listingGuestLabel}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {`${e.startMonth}/${e.startDay}/${e.startYear} - ${e.endMonth}/${e.endDay}/${e.endYear}`}
+                          </td>
+                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
+                            {`${price}$`}
+                          </td>
+                        </tr>
                     ))}
                   </>
                 )}
