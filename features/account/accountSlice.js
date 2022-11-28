@@ -4,6 +4,7 @@ import {
   getData,
   userExisted,
   updateUser,
+  loginUser,
   historyReservation,
 } from "../../firebaseFunction";
 
@@ -22,10 +23,15 @@ export const createUserWithEmailAndPass = createAsyncThunk(
 export const loginUserWithEmailAndPass = createAsyncThunk(
   "user/loging",
   async (userObj) => {
-    let data = await getData(userObj);
+    let data = await loginUser(userObj);
     return data;
   }
 );
+
+export const callback = createAsyncThunk("user/callback", async (userObj) => {
+  let data = await getData(userObj);
+  return data;
+});
 
 export const UpdateProfile = createAsyncThunk(
   "user/profile",
@@ -70,6 +76,12 @@ export const accountSlice = createSlice({
       state.login.status = false;
       state.signUp.status = true;
       state.user = {};
+    },
+    redeem: (state, action) => {
+      state.user.reward -= 100;
+    },
+    returnPoint: (state, action) => {
+      state.user.reward += 100;
     },
     isBookingSameDay: (state, action) => {
       state.sameDayBooking = false;
@@ -119,6 +131,11 @@ export const accountSlice = createSlice({
       if (action.payload) state.login.status = true;
       state.user = action.payload;
     });
+    builder.addCase(callback.fulfilled, (state, action) => {
+      if (action.payload) state.login.status = true;
+      state.signUp.status = false;
+      state.user = action.payload;
+    });
     builder.addCase(reservationHist.fulfilled, (state, action) => {
       if (action.payload) state.reservationHist.isLoading = false;
       state.reservationHist.reservations = action.payload;
@@ -126,7 +143,6 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { reload, userSignOut, isBookingSameDay, reloadBookingSameDay } =
-  accountSlice.actions;
+export const { reload, userSignOut, redeem, returnPoint,isBookingSameDay, reloadBookingSameDay } =  accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -4,13 +4,22 @@ import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import { useDispatch, useSelector } from "react-redux";
 import { HotelContext } from "../Context/hotelContext";
 import getStripe from "../../getStripe";
+<<<<<<< HEAD
+import { UserContext } from "../Context/userContext";
+=======
 import { isBookingSameDay } from "../../features/account/accountSlice";
 
+>>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
 function DisplayResult() {
+  const { point, setPoint } = useContext(UserContext);
+
   const router = useRouter();
+<<<<<<< HEAD
+=======
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
   const { currentHotel, setCurrentHotel } = useContext(HotelContext);
+>>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
   const property = router.query;
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
@@ -27,7 +36,12 @@ function DisplayResult() {
   const price = priceConvert(property.price);
 
   if (!property.id) return <h2>Loading......</h2>;
-  let total = price * countDayStay;
+  let total = 0
+  if (!point) {
+    total = (price * countDayStay);
+  } else {
+    total = (price * countDayStay) * 0.95;
+  }
 
   const handleCheckout = async () => {
     const date = [

@@ -16,7 +16,7 @@ function Login() {
   const linkParam = router.query;
   const { setSignup, setForgotpass } = useContext(AccountContext);
   const [userObj, setUserObj] = useState({ email: null, pwd: null });
-  const signUpStatus = useSelector((state) => state.account.signUp.status);
+  const loginStatus = useSelector((state) => state.account.login.status);
   const dispatch = useDispatch();
   const [Required, setRequired] = useState({
     emailRequired: false,
@@ -49,14 +49,18 @@ function Login() {
   const getPwd = (e) => {
     setUserObj({ ...userObj, pwd: e.target.value });
   };
-  const signIn = async(e) => {
+  const signIn = async (e) => {
     e.preventDefault();
     if (userObj.email && userObj.pwd) {
-      await loginUser(userObj);
+      dispatch(loginUserWithEmailAndPass(userObj));
     }
-    router.replace("/");
   };
-
+  
+  useEffect(() => {
+    if(loginStatus) {
+    router.replace("/");
+    }
+  },[loginStatus])
 
   return (
     <div className="backdrop-blur-md bg-white/30 border-4 border-slate-200 rounded-[50px] w-[500px] h-[600px] text-center ml-10">

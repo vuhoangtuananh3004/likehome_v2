@@ -8,15 +8,26 @@ import Hamburger from "../Header/Hamburger";
 import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "../../firebaseFunction";
+import { callback } from "../../features/account/accountSlice";
+
 export default function HomePage() {
-  
+  const dispactch = useDispatch();
+  const loginStatus = useSelector((state) => state.account);
+  console.log(loginStatus);
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      if(!user) return;
+      console.log(user);
+      dispactch(callback(user));
+    });
+  }, [dispactch]);
 
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {
     open: { opacity: 1, pointerEvents: "auto", transition: { duration: 2 } },
     close: { opacity: 0, pointerEvents: "none", transition: { duration: 2 } },
   };
- 
 
   return (
     <div className="relative overflow-hidden">
@@ -38,7 +49,6 @@ export default function HomePage() {
         >
           <MiddleSection />
         </motion.div>
-    
       </HomePageContext.Provider>
     </div>
   );

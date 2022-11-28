@@ -182,6 +182,7 @@ export const rewardUpdate = async (email, newReward) => {
 
 export const getData = async (objUser) => {
   try {
+    if(!objUser) return;
     const userDocRef = doc(db, "users", objUser.email);
     const docSnap = await getDoc(userDocRef);
     return docSnap.data();

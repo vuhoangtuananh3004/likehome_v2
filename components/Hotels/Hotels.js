@@ -24,6 +24,10 @@ import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
 export default function Hotels(props) {
   const router = useRouter();
   const { hotels, locationName, checkin, checkout } = router.query;

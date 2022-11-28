@@ -6,17 +6,16 @@ import { Provider } from "react-redux";
 import store from "../store/store";
 import { useEffect } from "react";
 import { HotelProvider } from "../components/Context/hotelContext";
-import { getCurrentUser } from "../firebaseFunction";
-
+import { UserProvider } from "../components/Context/userContext";
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
-  });
+ 
   return (
     <Provider store={store}>
+      <UserProvider>
       <HotelProvider>
         <Component {...pageProps} />
       </HotelProvider>
+      </UserProvider>
     </Provider>
   );
 }

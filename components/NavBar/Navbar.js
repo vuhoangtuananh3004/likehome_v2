@@ -13,7 +13,6 @@ export default function Navbar() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.account);
-  console.log(user);
   const router = useRouter();
   const { isOpen, setIsOpen } = useContext(HomePageContext);
   const navBtn = (name) => {

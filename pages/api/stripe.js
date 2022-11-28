@@ -4,8 +4,8 @@ import { Billing, rewardUpdate } from "../../firebaseFunction";
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  const email = req.body.user.email
-  const booking = req.body
+  const email = req.body.user.email;
+  const booking = req.body;
   if (req.method === "POST") {
     try {
       // Create Checkout Sessions from body params.
@@ -29,13 +29,12 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/`,
         cancel_url: `${req.headers.origin}/`,
       });
-      let data = {...session, ...booking}
-      const reward = req.body.user.reward + (req.body.total * 0.5)
-      await Billing(email, data)
-      await rewardUpdate(email, reward)
-      console.log(data)
+      let data = { ...session, ...booking };
+      const reward = req.body.user.reward + req.body.total * 0.05;
+      await Billing(email, data);
+      await rewardUpdate(email, reward);
+      console.log(data);
       res.status(200).json(session);
-      
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
     }

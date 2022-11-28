@@ -11,7 +11,7 @@ export const fetchHotelsByDestinationId = createAsyncThunk(
   async (id) => {
     const data = await getPropertiesByDestinationId(id).then(
       (data) => data.listHotels
-    );  
+    );
     return [...data];
   }
 );
@@ -35,7 +35,7 @@ export const hotelSlice = createSlice({
   reducers: {
     fetchHotelByDestID: (state, action) => {
       state.getHotelByDestinationId.hotels = action.payload;
-      state.filterHotels = action.payload
+      state.filterHotels = action.payload;
       state.getHotelByDestinationId.isLoading = false;
     },
     copyListHotels: (state, action) => {
@@ -64,14 +64,16 @@ export const hotelSlice = createSlice({
       };
     },
     filter: (state, action) => {
-      const filter = state.getHotelByDestinationId.hotels;``
+      const filter = state.getHotelByDestinationId.hotels;
+      ``;
       action.payload.map((doc) => {
         switch (doc.name) {
           case "PRICE":
             if (doc.value != undefined) {
-          
               if (doc.value != 300)
-              filter = filter.filter((t) => priceConvert(t.price) <= doc.value);
+                filter = filter.filter(
+                  (t) => priceConvert(t.price) <= doc.value
+                );
             }
             if (doc.sortType != undefined) {
               if (doc.sortType == "INCREASE") {
@@ -129,7 +131,7 @@ export const hotelSlice = createSlice({
       .addCase(fetchHotelsByDestinationId.fulfilled, (state, action) => {
         state.filterHotels = action.payload;
         state.getHotelByDestinationId.hotels = action.payload;
-        state.getHotelByDestinationId.isLoading = false;    
+        state.getHotelByDestinationId.isLoading = false;
       });
   },
 });
@@ -140,7 +142,7 @@ export const {
   filter,
   reloadGetHotelByDestinationId,
   searchBoxFilterValue,
-  fetchHotelByDestID
+  fetchHotelByDestID,
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;
