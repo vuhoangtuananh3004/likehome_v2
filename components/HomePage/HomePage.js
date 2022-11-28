@@ -9,7 +9,8 @@ import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../firebaseFunction";
-import { callback, loginUserWithEmailAndPass } from "../../features/account/accountSlice";
+import { callback, reservationHist } from "../../features/account/accountSlice";
+
 export default function HomePage() {
   const dispatch = useDispatch();
   const loginStatus = useSelector((state) => state.account);
@@ -19,10 +20,10 @@ export default function HomePage() {
     getCurrentUser().then((user) => {
       if(!user) return;
       console.log(user);
-      dispatch(callback(user));
-    });   
-  
-  }, [dispatch]);
+      dispactch(callback(user));
+      dispactch(reservationHist(user.email));
+    });
+  }, [dispactch]);
 
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {

@@ -45,6 +45,10 @@ function Promotion() {
           <button className="text-center" onClick={Redeem}>
             Redeem
           </button>
+<<<<<<< HEAD
+          <span className="text-center font-bold tracking-wider">{user.user.reward} points reward.</span>
+=======
+>>>>>>> 6cfb0fa2d3f016dfc042652296aef01eec7e05d7
         </div>
       )}
     </>
