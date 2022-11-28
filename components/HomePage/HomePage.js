@@ -9,19 +9,20 @@ import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../firebaseFunction";
-import { callback } from "../../features/account/accountSlice";
-
+import { callback, loginUserWithEmailAndPass } from "../../features/account/accountSlice";
 export default function HomePage() {
-  const dispactch = useDispatch();
+  const dispatch = useDispatch();
   const loginStatus = useSelector((state) => state.account);
-  console.log(loginStatus);
+  const user = useAuth()
+
   useEffect(() => {
     getCurrentUser().then((user) => {
       if(!user) return;
       console.log(user);
-      dispactch(callback(user));
-    });
-  }, [dispactch]);
+      dispatch(callback(user));
+    });   
+  
+  }, [dispatch]);
 
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {

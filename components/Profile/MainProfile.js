@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { callback } from "../../features/account/accountSlice";
 import { auth } from "../../firebaseConfig";
 import ProfileContext from "../Context/ProfileContext";
 import Payment from "./Payment";
@@ -14,7 +16,12 @@ const PAYMENT = "PAYMENT"
 
 function MainProfile() {
   const router = useRouter();
+  const email = router.query.profile;
+  const dispatch = useDispatch()
   const [isOpen, setOpen] = useState("PROFILE");
+  useEffect(()=>{
+      dispatch(callback({email: email}))
+  },[dispatch, email])
   const signOutHandler = (e) => {
     e.preventDefault();
     auth.signOut();
