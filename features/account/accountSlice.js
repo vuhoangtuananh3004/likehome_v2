@@ -76,7 +76,9 @@ export const accountSlice = createSlice({
       state.login.status = false;
       state.signUp.status = true;
       state.user = {};
+      state.reservationHist.reservations = []
     },
+
     redeem: (state, action) => {
       state.user.reward -= 100;
     },
@@ -143,6 +145,6 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { reload, userSignOut, redeem, returnPoint,isBookingSameDay, reloadBookingSameDay } =  accountSlice.actions;
+export const { reload, userSignOut, redeem, returnPoint,isBookingSameDay, reloadBookingSameDay} =  accountSlice.actions;
 
 export default accountSlice.reducer;

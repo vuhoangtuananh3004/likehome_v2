@@ -9,7 +9,7 @@ import useAuth from "../Account/useAuth";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../firebaseFunction";
-import { callback } from "../../features/account/accountSlice";
+import { callback, reservationHist } from "../../features/account/accountSlice";
 
 export default function HomePage() {
   const dispactch = useDispatch();
@@ -20,6 +20,7 @@ export default function HomePage() {
       if(!user) return;
       console.log(user);
       dispactch(callback(user));
+      dispactch(reservationHist(user.email));
     });
   }, [dispactch]);
 

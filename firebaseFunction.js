@@ -146,6 +146,7 @@ export const checkAvailable = async (hotelId) => {
 export const historyReservation = async (userEmail) => {
   const docRef = doc(db, "userbilling", userEmail);
   const docSnap = await getDoc(docRef);
+  console.log(docSnap.data().array)
   if (docSnap.exists()) {
     return  docSnap.data().array;
   } else {

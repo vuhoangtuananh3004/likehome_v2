@@ -4,22 +4,16 @@ import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import { useDispatch, useSelector } from "react-redux";
 import { HotelContext } from "../Context/hotelContext";
 import getStripe from "../../getStripe";
-<<<<<<< HEAD
 import { UserContext } from "../Context/userContext";
-=======
 import { isBookingSameDay } from "../../features/account/accountSlice";
 
->>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
 function DisplayResult() {
   const { point, setPoint } = useContext(UserContext);
 
   const router = useRouter();
-<<<<<<< HEAD
-=======
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
   const { currentHotel, setCurrentHotel } = useContext(HotelContext);
->>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
   const property = router.query;
   const { dateAvailable, displayAvailableDays, dateBookingObj, countDayStay } =
     useSelector((state) => state.booking);
@@ -42,13 +36,15 @@ function DisplayResult() {
   } else {
     total = (price * countDayStay) * 0.95;
   }
-
+let statusP = "Complete";
   const handleCheckout = async () => {
     const date = [
       `${dateBookingObj.inMonth}/${dateBookingObj.inDay}/${dateBookingObj.inYear}`,
       `${dateBookingObj.outMonth}/${dateBookingObj.outDay}/${dateBookingObj.outYear}`,
     ];
-    let res = { ...user, ...property, total, date };
+  
+    let res = { ...user, ...property, total, date, statusP};
+    console.log(res);
 
     const stripe = await getStripe();
     if (!res.login.status) return alert("Need to sign in");
@@ -194,7 +190,7 @@ function DisplayResult() {
                               {`${e.startMonth}/${e.startDay}/${e.startYear} - ${e.endMonth}/${e.endDay}/${e.endYear}`}
                             </td>
                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                              {`${price}$`}
+                              ${`${price}`}
                             </td>
                           </tr>
                         ))}
