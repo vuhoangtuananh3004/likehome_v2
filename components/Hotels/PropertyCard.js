@@ -59,8 +59,8 @@ export default function PropertyCard({ value }) {
   };
 
   return (
-    <div className="flex flex-col h-[300px] w-[350px] rounded-[24px] border-2 border-white bg-yellow-900/50 shadow-lg shadow-blue-500/50">
-      <div className="relative h-[225px] w-full overflow-scroll group/book">
+    <div className="flex flex-col h-[300px] w-[300px] rounded-[24px] border-2 border-white bg-yellow-900/50 shadow-lg shadow-blue-500/50">
+      <div className="relative h-[300px] w-full overflow-scroll group/book">
         <div className="absolute h-full w-full t-0 l-0 text-black z-10">   
             <div
               className="absolute bottom-3 h-[50px] w-[200px] bg-purple-900/70 rounded-br-[50px] text-center text-white font-bold tracking-wider translate-x-[-200px] group-hover/book:translate-x-[0px] transition duration-700 ease-in-out"
@@ -95,7 +95,7 @@ export default function PropertyCard({ value }) {
           priority
         />
       </div>
-      <div className="flex flex-col h-[75px] w-full bg-white/50 rounded-bl-[24px] rounded-br-[24px] text-sm text-black overflow-scroll space-y-1">
+      <div className="flex flex-col h-[100px] w-full bg-white/50 rounded-bl-[24px] rounded-br-[24px] text-sm text-black overflow-scroll space-y-1">
         <span className="text-sm text-center w-full">
           {`${detail.title}`} {`(${detail.reviews} reviews)`}
         </span>

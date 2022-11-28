@@ -58,9 +58,11 @@ const initialState = {
     status: false,
   },
   reservationHist: {
-    reservations: {},
+    reservations: [],
     isLoading: true,
   },
+  sameDayBooking: false,
+  dayHist: [],
 };
 
 export const accountSlice = createSlice({
@@ -80,6 +82,40 @@ export const accountSlice = createSlice({
     },
     returnPoint: (state, action) => {
       state.user.reward += 100;
+    },
+    isBookingSameDay: (state, action) => {
+      state.sameDayBooking = false;
+      let temp = state.reservationHist.reservations;
+      let dateObj = action.payload;
+
+      if (dateObj) {
+        let dateIn = `${dateObj.inMonth}/${dateObj.inDay}/${dateObj.inYear}`;
+        let dateOut = `${dateObj.outMonth}/${dateObj.outDay}/${dateObj.outYear}`;
+        let getTimeDateIn = new Date(dateIn).getTime();
+        let getTimeDateOut = new Date(dateOut).getTime();
+        temp.map((data) => {
+          let getTimeHisIn = new Date(data.date[0]).getTime();
+          let getTimeHisOut = new Date(data.date[1]).getTime();
+          if (getTimeDateIn >= getTimeHisIn && getTimeDateIn <= getTimeHisOut) {
+            state.dayHist = []
+            state.dayHist.push(...data.date)
+            state.sameDayBooking = true;
+            return
+          }
+          if (
+            getTimeDateOut >= getTimeHisIn &&
+            getTimeDateOut <= getTimeHisOut
+          ) {
+            state.dayHist = []
+            state.dayHist.push(...data.date)
+            state.sameDayBooking = true;
+            return
+          }
+        });
+      }
+    },
+    reloadBookingSameDay: (state, action) => {
+      state.reservationHist.isLoading = true;
     },
   },
   extraReducers: (builder) => {
@@ -107,7 +143,6 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { reload, userSignOut, redeem, returnPoint } =
-  accountSlice.actions;
+export const { reload, userSignOut, redeem, returnPoint,isBookingSameDay, reloadBookingSameDay } =  accountSlice.actions;
 
 export default accountSlice.reducer;

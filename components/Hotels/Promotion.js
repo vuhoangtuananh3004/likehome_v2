@@ -38,6 +38,7 @@ function Promotion() {
         </div>
       ) : (
         <div className="flex flex-col w-full text-[16px]">
+<<<<<<< HEAD
           <span className="text-center">
             100 points you can redeem to get 5% discount for booking
           </span>
@@ -45,6 +46,9 @@ function Promotion() {
           <button className="text-center" onClick={Redeem}>
             Redeem
           </button>
+=======
+          <span className="text-center font-bold tracking-wider">{user.user.reward} points reward.</span>
+>>>>>>> 512bd6a987ce3cae3f0f7d9b9be760c9d1ca0266
         </div>
       )}
     </>

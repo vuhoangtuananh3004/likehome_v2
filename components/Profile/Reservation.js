@@ -12,14 +12,8 @@ function Reservation() {
   const user = useSelector((state) => state.account);
   const [isOpenRe, setOpenRe] = useState(false);
 
-  useEffect(() => {
-    if (reservations.isLoading) {
-      if (user.user.email)
-      dispatch(reservationHist(user.user.email));
-    }
-  }, [dispatch, reservations.isLoading, user.user.email]);
-
-  if (reservations.isLoading && user.user.email) return <h2>Loading....</h2>;
+  console.log(user);
+  if (user.email) return <h2>Loading....</h2>;
   return (
     <div className="flex flex-col w-full justify-center items-center">
       <span className="w-full p-4 rounded  text-[24px] mb-10 text-center shadow-xl shadow-white/30">
