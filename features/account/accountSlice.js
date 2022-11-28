@@ -56,6 +56,7 @@ const initialState = {
     isLoading: true,
   },
   sameDayBooking: false,
+  dayHist: [],
 };
 
 export const accountSlice = createSlice({
@@ -83,14 +84,18 @@ export const accountSlice = createSlice({
         temp.map((data) => {
           let getTimeHisIn = new Date(data.date[0]).getTime();
           let getTimeHisOut = new Date(data.date[1]).getTime();
-          if (getTimeDateIn > getTimeHisIn && getTimeDateIn < getTimeHisOut) {
+          if (getTimeDateIn >= getTimeHisIn && getTimeDateIn <= getTimeHisOut) {
+            state.dayHist = []
+            state.dayHist.push(...data.date)
             state.sameDayBooking = true;
             return
           }
           if (
-            getTimeDateOut > getTimeHisIn &&
-            getTimeDateOut < getTimeHisOut
+            getTimeDateOut >= getTimeHisIn &&
+            getTimeDateOut <= getTimeHisOut
           ) {
+            state.dayHist = []
+            state.dayHist.push(...data.date)
             state.sameDayBooking = true;
             return
           }

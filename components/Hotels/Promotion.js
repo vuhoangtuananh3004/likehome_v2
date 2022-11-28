@@ -23,8 +23,7 @@ function Promotion() {
         </div>
       ) : (
         <div className="flex flex-col w-full text-[16px]">
-          <span className="text-center">{user.user.reward}</span>
-          <span className="text-center" >Redeem</span>
+          <span className="text-center font-bold tracking-wider">{user.user.reward} points reward.</span>
         </div>
       )}
     </>

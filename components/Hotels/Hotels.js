@@ -120,7 +120,7 @@ export default function Hotels(props) {
           transition={{ duration: 2 }}
           className="container min-h-screen w-full overflow-auto ml-10"
         >
-          <div className="grid grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {getCopyListHotel.map((doc) => (
               <div key={doc.id} className="last:mb-[12rem]">
                 <PropertyCard images={doc.images} value={doc} />

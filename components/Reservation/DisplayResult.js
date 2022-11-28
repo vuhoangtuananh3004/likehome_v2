@@ -57,8 +57,8 @@ function DisplayResult() {
           <div className="">
             {user.sameDayBooking ? (
               <span className="text-red-900 font-bold">
-                You have made a reservation during the time period above, Please
-                go to Profile&gt;Reservations for make change
+                Note : You have made a reservation during the time from {user.dayHist[0]} - {user.dayHist[1]}. Please
+                go to Profile &gt; Reservations for make change.
               </span>
             ) : (
               <>
