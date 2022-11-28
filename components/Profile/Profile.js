@@ -16,6 +16,7 @@ function Profile() {
   const data = useSelector((state) => state.account);
   const dispatch = useDispatch();
 
+
   const [firstname, setFirstname] = useState(data.user.firstname);
   const [lastname, setLastname] = useState(data.user.lastname);
   const [phone, setPhone] = useState(data.user.phone);
@@ -72,151 +73,117 @@ function Profile() {
     setEditFirstname(false);
   };
   return (
-    <>
-      <div className="flex flex-row align-center p-4 text-[20px]">
-        <button className="flex flex-col text-white px-4 font-bold tracking-widest text-[30px]">
-          <p className="hover:scale-110">
-            <Link href="/">Home </Link>
-          </p>
-        </button>
-      </div>
-      <div className="flex flex-row justify-center align-center p-4 text-[20px]">
-        <span className="flex flex-col justify-center align-center text-white text-center font-bold tracking-widest text-[30px] top 20">
+    <div className="flex flex-col justify-center items-center h-full w-full text-white">
+      <div className="flex flex-col h-full w-full justify-center">
+        <span className="text-center font-bold tracking-widest text-[30px] mt-10">
           {data.user.firstname ? welcome : welcomeDefault}
         </span>
       </div>
-      <div className="absolute brightness-50 h-full w-full top-0 -z-40">
-        <Image
-          src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="No image found"
-          layout="fill"
-          objectFit="cover"
-          priority
-          quality={10}
-        />
-      </div>
-      <hr></hr>
-      <div className="flex flex-row justify-center align-center p-4 text-[20px]">
-        <button className="flex flex-col justify-center align-center text-white px-4 underline text-center">
-          <p className="hover:scale-125">Profile</p>
-        </button>
-        <button className="flex flex-col justify-center align-center text-white px-4 text-center">
-          <p className="hover:scale-125"> Reservations</p>
-        </button>
-        <button className="flex flex-col justify-center align-center text-white px-4 text-center">
-          <p className="hover:scale-125">Payment</p>
-        </button>
-        <button
-          className="flex flex-col justify-center align-center text-white px-4 text-center"
-          onClick={signOutHandler}
-        ></button>
-      </div>
-      <hr></hr>
 
-      <div className="flex flex-row justify-left align-center">
-        <div className="flex flex-col justify-left align-center p-7">
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            First name
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Last name
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Phone number
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Email
-          </span>
-          <span className="text-white pl-20 font-bold tracking-widest text-[16px] p-4">
-            Password
-          </span>
-          <button className="bg-white p-4 text-black rounded" onClick={onSave}>
-            Save
-          </button>
-        </div>
-        <div className="flex flex-col justify-left align-center p-7">
-          <div className="flex flex-row">
-            {editFirstname ? (
-              <div className="flex w-[300px] h-[50px] rounded-full ml-20 border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
-                <input
-                  className="rounded-l-full pl-10 h-full w-full outline-none"
-                  type="text"
-                  placeholder="Enter new firstname"
-                  onChange={(e) => setFirstname(e.target.value)}
-                />
-                <BadgeOutlinedIcon className="mr-5" />
+      <table className="border-separate border-spacing-5 mt-10 text-xl font-bold tracking-wider">
+        <tbody>
+          <tr>
+            <td>First name: </td>
+            <td>
+              <div className="flex flex-row items-center">
+                {editFirstname ? (
+                  <div className="flex flex-row items-center h-[40px] w-[300px] rounded-full border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
+                    <input
+                      className="rounded-l-full text-center w-full outline-none text-black"
+                      type="text"
+                      placeholder="Enter new first name"
+                      onChange={(e) => setFirstname(e.target.value)}
+                    />
+                    <BadgeOutlinedIcon className="text-black mr-5" />
+                  </div>
+                ) : (
+                  <span className="w-full text-right">
+                    {data.user.firstname ? firstname : "first name not found"}
+                  </span>
+                )}
+                <button
+                  className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
+                  onClick={EditFirstname}
+                >
+                  <EditOutlinedIcon />
+                </button>
               </div>
-            ) : (
-              <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-                {data.user.firstname ? firstname : "first name not found"}
-              </span>
-            )}
-            <button
-              className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
-              onClick={EditFirstname}
-            >
-              <EditOutlinedIcon />
-            </button>
-          </div>
-          <div className="flex flex-row">
-            {editLastname ? (
-              <div className="flex w-[300px] h-[50px] rounded-full ml-20 border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
-                <input
-                  className="rounded-l-full pl-10 h-full w-full outline-none"
-                  type="text"
-                  placeholder="Enter new lastname"
-                  onChange={(e) => setLastname(e.target.value)}
-                />
-                <BadgeOutlinedIcon className="mr-5" />
+            </td>
+          </tr>
+          <tr>
+            <td>Last name: </td>
+            <td>
+              <div className="flex flex-row items-center">
+                {editLastname ? (
+                  <div className="flex h-[40px] w-[300px] rounded-full border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
+                    <input
+                      className="rounded-l-full text-center w-full outline-none text-black"
+                      type="text"
+                      placeholder="Enter new last name"
+                      onChange={(e) => setLastname(e.target.value)}
+                    />
+                    <BadgeOutlinedIcon className="text-black mr-5" />
+                  </div>
+                ) : (
+                  <span className="w-full text-right">
+                    {data.user.lastname ? lastname : "last name not found"}
+                  </span>
+                )}
+                <button
+                  className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
+                  onClick={EditLastname}
+                >
+                  <EditOutlinedIcon />
+                </button>
               </div>
-            ) : (
-              <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-                {data.user.lastname ? lastname : "last name not found"}
-              </span>
-            )}
-            <button
-              className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
-              onClick={EditLastname}
-            >
-              <EditOutlinedIcon />
-            </button>
-          </div>
-          <div className="flex flex-row">
-            {editPhone ? (
-              <div className="flex w-[300px] h-[50px] rounded-full ml-20 border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
-                <input
-                  className="rounded-l-full pl-10 h-full w-full outline-none"
-                  type="text"
-                  placeholder="Enter new phone number"
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <ContactPhoneOutlinedIcon className="mr-5" />
+            </td>
+          </tr>
+          <tr>
+            <td>Phone number: </td>
+            <td>
+              <div className="flex flex-row items-center">
+                {editPhone ? (
+                  <div className="flex h-[40px] w-[300px] rounded-full border border-red-900 bg-white align-center items-center hover:border-4 hover:border-#ea580c">
+                    <input
+                      className="rounded-l-full text-center w-full outline-none text-black"
+                      type="text"
+                      placeholder="Enter new phone number"
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <ContactPhoneOutlinedIcon className="text-black mr-5" />
+                  </div>
+                ) : (
+                  <span className="w-full text-right">
+                    {data.user.phone ? phone : "phone number not found"}
+                  </span>
+                )}
+                <button
+                  className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
+                  onClick={EditPhone}
+                >
+                  <EditOutlinedIcon />
+                </button>
               </div>
-            ) : (
-              <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-                {data.user.phone ? phone : "phone number not found"}
-              </span>
-            )}
-            <button
-              className="flex flex-col justify-center align-center text-white p-4 text-center hover:scale-125"
-              onClick={EditPhone}
-            >
-              <EditOutlinedIcon />
-            </button>
-          </div>
-          <div className="flex flex-row">
-            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-              {email}
-            </span>
-          </div>
-          <div className="flex flex-row">
-            <span className="text-white pl-20 tracking-widest text-[16px] p-4">
-              {pwdHidden}
-            </span>
-          </div>
-        </div>
-      </div>
-    </>
+            </td>
+          </tr>
+          <tr>
+            <td>Email: </td>
+            <td>
+              <div className="w-full text-right">{email}</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Password: </td>
+            <td>
+              <div className="w-full text-right">{pwdHidden}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button className="bg-white w-[200px] p-3 text-black rounded-full mt-10" onClick={onSave}>
+        Save
+      </button>
+    </div>
   );
 }
 

@@ -1,9 +1,10 @@
-import React from 'react'
-import Profile from '../../components/Profile/Profile'
-function index() {
-  return (
-    <Profile />
-  )
+import React from "react";
+import { useSelector } from "react-redux";
+import MainProfile from "../../components/Profile/MainProfile";
+
+function Index() {
+
+  return <MainProfile /> 
 }
 
-export default index
+export default Index;

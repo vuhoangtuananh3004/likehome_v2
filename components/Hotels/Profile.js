@@ -7,6 +7,9 @@ import { userSignOut } from "../../features/account/accountSlice";
 import useAuth from "../Account/useAuth";
 import {signOutUser}from "../../firebaseFunction";
 
+
+import Link from "next/link";
+
 function Profile(props) {
   const dispatch = useDispatch();
   const auth = useAuth();

@@ -4,10 +4,11 @@ import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataBooking, checkDate } from "../../features/hotel/bookingSlice";
 import DisplayResult from "./DisplayResult";
-import DatePicker1 from "react-datepicker";
 import useAuth from "../Account/useAuth";
 
+
 import { motion } from "framer-motion";
+
 
 function Booking() {
   const auth = useAuth();

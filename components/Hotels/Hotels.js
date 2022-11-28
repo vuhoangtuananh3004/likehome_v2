@@ -23,6 +23,8 @@ import { auth } from "../../firebaseConfig";
 import useAuth from "../Account/useAuth";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
+
+
 export default function Hotels(props) {
   const router = useRouter();
   const { hotels, locationName, checkin, checkout } = router.query;
