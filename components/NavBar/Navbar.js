@@ -11,20 +11,22 @@ import { signOutUser } from "../../firebaseFunction";
 
 export default function Navbar() {
   const dispatch = useDispatch();
-
+  const userSign = useAuth();
   const user = useSelector((state) => state.account);
   const router = useRouter();
   const { isOpen, setIsOpen } = useContext(HomePageContext);
   const navBtn = (name) => {
     setIsOpen({ [name]: true });
   };
+  console.log(userSign.user.email);
   const SignOut = async () => {
     dispatch(userSignOut());
     await signOutUser();
   };
   const Profile = (e) => {
     e.preventDefault();
-    router.replace("/profile");
+    let path = "/profile/" + userSign.user.email;
+    router.replace(path);
   };
 
   const Login = (e) => {

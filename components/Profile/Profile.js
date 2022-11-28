@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UpdateProfile } from "../../features/account/accountSlice";
 import { auth } from "../../firebaseConfig";
@@ -12,26 +12,38 @@ import { useRouter } from "next/router";
 
 function Profile() {
   const router = useRouter();
-  const user = useAuth();
-  const data = useSelector((state) => state.account);
+  const {user, loading} = useAuth();
+  const data = useSelector((state) => state.account.user);
   const dispatch = useDispatch();
 
 
-  const [firstname, setFirstname] = useState(data.user.firstname);
-  const [lastname, setLastname] = useState(data.user.lastname);
-  const [phone, setPhone] = useState(data.user.phone);
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+  const [phone, setPhone] = useState();
   const [editFirstname, setEditFirstname] = useState(false);
   const [editLastname, setEditLastname] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
-  const [email] = useState(data.user.email);
+  const [email, setEmail] = useState();
+  
+  useEffect(()=>{
+    if (data){
+      setFirstname(user.firstname)
+      setLastname(user.lastname)
+      setPhone(user.phone)
+      setEmail(user.email)
+    }
+  },[data, user])
 
-  var pwdLen = data.user.pwd.length;
-  var pwdHidden = data.user.pwd.charAt(0);
-  for (var i = 1; i < pwdLen; i++) {
-    pwdHidden += "*";
-  }
+  console.log(data);
+  if(!data) return <h2>Loading....</h2>
 
-  var welcome = "Welcome back, " + data.user.firstname + "!";
+  // var pwdLen = user.pwd.length;
+  // var pwdHidden = user.pwd.charAt(0);
+  // for (var i = 1; i < pwdLen; i++) {
+  //   pwdHidden += "*";
+  // }
+
+  var welcome = "Welcome back, " + data.firstname + "!";
   var welcomeDefault = "Welcome back!";
 
   const signOutHandler = (e) => {
@@ -76,7 +88,7 @@ function Profile() {
     <div className="flex flex-col justify-center items-center h-full w-full text-white">
       <div className="flex flex-col h-full w-full justify-center">
         <span className="text-center font-bold tracking-widest text-[30px] mt-10">
-          {data.user.firstname ? welcome : welcomeDefault}
+          {data.firstname ? welcome : welcomeDefault}
         </span>
       </div>
 
@@ -98,7 +110,7 @@ function Profile() {
                   </div>
                 ) : (
                   <span className="w-full text-right">
-                    {data.user.firstname ? firstname : "first name not found"}
+                    {data.firstname ? data.firstname : "first name not found"}
                   </span>
                 )}
                 <button
@@ -126,7 +138,7 @@ function Profile() {
                   </div>
                 ) : (
                   <span className="w-full text-right">
-                    {data.user.lastname ? lastname : "last name not found"}
+                    {data.lastname ? data.lastname : "last name not found"}
                   </span>
                 )}
                 <button
@@ -154,7 +166,7 @@ function Profile() {
                   </div>
                 ) : (
                   <span className="w-full text-right">
-                    {data.user.phone ? phone : "phone number not found"}
+                    {data.phone ? data.phone : "phone number not found"}
                   </span>
                 )}
                 <button
@@ -169,13 +181,13 @@ function Profile() {
           <tr>
             <td>Email: </td>
             <td>
-              <div className="w-full text-right">{email}</div>
+              <div className="w-full text-right">{data.email}</div>
             </td>
           </tr>
           <tr>
             <td>Password: </td>
             <td>
-              <div className="w-full text-right">{pwdHidden}</div>
+              <div className="w-full text-right">***</div>
             </td>
           </tr>
         </tbody>

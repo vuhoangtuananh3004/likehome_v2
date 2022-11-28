@@ -9,8 +9,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 function Reservation() {
   const dispatch = useDispatch();
   const reservations = useSelector((state) => state.account.reservationHist);
-  const user = useSelector((state) => state.account);
+  const user = useSelector((state) => state.account.user);
   const [isOpenRe, setOpenRe] = useState(false);
+<<<<<<< HEAD
   const [text, setText] = useState(false);
 
 
@@ -19,6 +20,12 @@ function Reservation() {
   } 
   console.log(user);
   if (user.email) return <h2>Loading....</h2>;
+=======
+  useEffect(() => {
+    if (reservations.isLoading) dispatch(reservationHist(user.email));
+  }, [dispatch, reservations.isLoading, user.email]);
+  if (!user.email) return <h2>Loading....</h2>;
+>>>>>>> 6cfb0fa2d3f016dfc042652296aef01eec7e05d7
   return (
     <div className="flex flex-col w-full justify-center items-center">
       <span className="w-full p-4 rounded  text-[24px] mb-10 text-center shadow-xl shadow-white/30">
@@ -55,20 +62,34 @@ function Reservation() {
                 />
               </td>
               <td>{value.title}</td>
+<<<<<<< HEAD
               <td>01/24/2023 - 01/26/2023</td>
+=======
+              <td>{value.date[0]} - {value.date[1]}</td>
+>>>>>>> 6cfb0fa2d3f016dfc042652296aef01eec7e05d7
               <td>{value.accessibilityLabel}</td>
               <td>${value.amount_total / 100}</td>
               <td>
                 <span className="flex w-[120px] justify-center items-center ring ring-offset-2 shadow-xl shadow-rose-900/70 rounded-[24px] p-5 bg-green-700/90">
+<<<<<<< HEAD
                   {value.statusP}
+=======
+                  Complete
+>>>>>>> 6cfb0fa2d3f016dfc042652296aef01eec7e05d7
                 </span>
               </td>
               <td>
                 <span
                   className="flex w-[120px] text-[24px] justify-center items-center ring ring-offset-2 shadow-xl shadow-yellow-500/70 rounded-[24px] p-5 bg-slate-400/40 cursor-pointer"
+<<<<<<< HEAD
                   onClick={handle(index)}
                 >
                   cancel{" "}
+=======
+                  onClick={() => setOpenRe(true)}
+                >
+                  <SettingsIcon fontSize="inherit" />
+>>>>>>> 6cfb0fa2d3f016dfc042652296aef01eec7e05d7
                 </span>
               </td>
             </tr>

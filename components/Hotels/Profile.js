@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../../features/account/accountSlice";
 import useAuth from "../Account/useAuth";
+
 import {signOutUser}from "../../firebaseFunction";
 
 
@@ -12,7 +13,7 @@ import Link from "next/link";
 
 function Profile(props) {
   const dispatch = useDispatch();
-  const auth = useAuth();
+  const userSign = useAuth();
   const router = useRouter();
   const linkParam = router.query;
   const user = useSelector((state) => state.account);
@@ -24,7 +25,8 @@ function Profile(props) {
   };
   const Profile = (e) => {
     e.preventDefault();
-    router.replace("/profile");
+    let path = "/profile/" + userSign.user.email;
+    router.replace(path);
   };
   const SignIn = (e) => {
     e.preventDefault();

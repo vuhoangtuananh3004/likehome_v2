@@ -43,9 +43,6 @@ export default function Hotels(props) {
     }
   }, [loadHotels, dispatch, hotels]);
 
-  // const PropertyCard = dynamic(() => import("./PropertyCard"), {
-  //   suspense: true,
-  // });
   const filterHotels = useSelector((state) => state.hotels.filterHotels);
   const variants = {
     loaded: { opacity: 1, transition: { duration: 2 } },

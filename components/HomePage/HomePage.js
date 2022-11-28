@@ -12,9 +12,10 @@ import { getCurrentUser } from "../../firebaseFunction";
 import { callback, reservationHist } from "../../features/account/accountSlice";
 
 export default function HomePage() {
-  const dispactch = useDispatch();
+  const dispatch = useDispatch();
   const loginStatus = useSelector((state) => state.account);
-  console.log(loginStatus);
+  const user = useAuth()
+
   useEffect(() => {
     getCurrentUser().then((user) => {
       if(!user) return;

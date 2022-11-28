@@ -60,7 +60,7 @@ function Login() {
     if(loginStatus) {
     router.replace("/");
     }
-  },[loginStatus])
+  },[loginStatus, router])
 
   return (
     <div className="backdrop-blur-md bg-white/30 border-4 border-slate-200 rounded-[50px] w-[500px] h-[600px] text-center ml-10">
