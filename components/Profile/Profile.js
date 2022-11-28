@@ -14,6 +14,7 @@ function Profile() {
   const router = useRouter();
   const {user, loading} = useAuth();
   const data = useSelector((state) => state.account.user);
+  const loadingUser = useSelector (state => state.isLoadingUser)
   const dispatch = useDispatch();
 
 
@@ -24,15 +25,15 @@ function Profile() {
   const [editLastname, setEditLastname] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
   const [email, setEmail] = useState();
-  
+
   useEffect(()=>{
     if (data){
-      setFirstname(user.firstname)
-      setLastname(user.lastname)
-      setPhone(user.phone)
-      setEmail(user.email)
+      setFirstname(data.firstname)
+      setLastname(data.lastname)
+      setPhone(data.phone)
+      setEmail(data.email)
     }
-  },[data, user])
+  },[data])
 
   console.log(data);
   if(!data) return <h2>Loading....</h2>
@@ -43,6 +44,7 @@ function Profile() {
   //   pwdHidden += "*";
   // }
 
+  console.log(lastname);
   var welcome = "Welcome back, " + data.firstname + "!";
   var welcomeDefault = "Welcome back!";
 

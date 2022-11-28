@@ -63,6 +63,7 @@ const initialState = {
   },
   sameDayBooking: false,
   dayHist: [],
+  isLoadingUser: true,
 };
 
 export const accountSlice = createSlice({
@@ -129,6 +130,7 @@ export const accountSlice = createSlice({
     });
     builder.addCase(UpdateProfile.fulfilled, (state, action) => {
        state.login.status = true;
+       state.isLoadingUser = false;
       state.user = action.payload;
     });
     builder.addCase(callback.fulfilled, (state, action) => {

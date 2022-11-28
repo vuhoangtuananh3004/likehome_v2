@@ -15,6 +15,10 @@ function Reservation() {
     if (reservations.isLoading) dispatch(reservationHist(user.email));
   }, [dispatch, reservations.isLoading, user.email]);
   if (!user.email) return <h2>Loading....</h2>;
+
+  const cancel = (e) => {
+    e.preventDefault();
+  }
   return (
     <div className="flex flex-col w-full justify-center items-center">
       <span className="w-full p-4 rounded  text-[24px] mb-10 text-center shadow-xl shadow-white/30">
@@ -62,9 +66,9 @@ function Reservation() {
               <td>
                 <span
                   className="flex w-[120px] text-[24px] justify-center items-center ring ring-offset-2 shadow-xl shadow-yellow-500/70 rounded-[24px] p-5 bg-slate-400/40 cursor-pointer"
-                  onClick={() => setOpenRe(true)}
+                  onClick={cancel}
                 >
-                  <SettingsIcon fontSize="inherit" />
+                  Cancel
                 </span>
               </td>
             </tr>
