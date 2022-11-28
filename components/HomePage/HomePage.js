@@ -20,10 +20,10 @@ export default function HomePage() {
     getCurrentUser().then((user) => {
       if(!user) return;
       console.log(user);
-      dispactch(callback(user));
-      dispactch(reservationHist(user.email));
+      dispatch(callback(user));
+      dispatch(reservationHist(user.email));
     });
-  }, [dispactch]);
+  }, [dispatch]);
 
   const [isOpen, setIsOpen] = useState({ homePage: true });
   const variants = {
